@@ -1,0 +1,13 @@
+## use this command to run the package >> dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#ffffff"
+  color_dark: "#141414"
+
+  # Light theme logo
+  image: assets/images/whatsapp_light_mood_icon.png
+
+  # Dark theme logo
+  image_dark: assets/images/whatsapp_dark_mood_icon.png
+
+  android: true
+  ios: true
