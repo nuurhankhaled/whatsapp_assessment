@@ -82,6 +82,10 @@ class $AssetsImagesGen {
   AssetGenImage get searchIcon =>
       const AssetGenImage('assets/images/search_icon.png');
 
+  /// File path: assets/images/seen_message.png
+  AssetGenImage get seenMessage =>
+      const AssetGenImage('assets/images/seen_message.png');
+
   /// File path: assets/images/settings.png
   AssetGenImage get settings =>
       const AssetGenImage('assets/images/settings.png');
@@ -120,6 +124,7 @@ class $AssetsImagesGen {
     metaAiLogo,
     plusIcon,
     searchIcon,
+    seenMessage,
     settings,
     settingsFilled,
     status,

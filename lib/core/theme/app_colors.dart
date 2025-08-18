@@ -8,6 +8,7 @@ class AppColors {
   // Backgrounds:
   static const iconBackground = Color(0xFFf7f7f7);
   static const textFieldBackground = Color(0xFFF4F4F4);
+  static const lightGreyBackground = Color(0xFFE5E5EA);
   // Texts:
   static const textPrimary = Color(0xFF0A0A0A);
   static const textSecondary = Color(0xFF767779);

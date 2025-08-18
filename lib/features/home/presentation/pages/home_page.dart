@@ -8,6 +8,7 @@ import 'package:whatsapp_assessment/core/functions/pop_curve.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/home/presentation/manager/main_layout_cubit/main_layout_cubit.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/camera_button.dart';
+import 'package:whatsapp_assessment/features/home/presentation/widgets/chat_card.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/menu_button.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/plus_button_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/sliver_app_bar.dart';
@@ -292,12 +293,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       case 3: // Chats
         return Column(
           children: [
-            Center(
-              child: Text(
-                appBarTitles[3].data!,
-                style: Theme.of(
-                  context,
-                ).textTheme.headlineMedium?.copyWith(fontFamily: "SFPro"),
+            Expanded(
+              child: ListView(
+                children: [
+                  const ChatCard(unreadCount: 5),
+                  const ChatCard(unreadCount: 0), // No badge shown
+                  const ChatCard(unreadCount: 1),
+                  const ChatCard(unreadCount: 23),
+                  const ChatCard(unreadCount: 999),
+                  const ChatCard(unreadCount: 1500), // Shows 999+
+                ],
               ),
             ),
           ],
