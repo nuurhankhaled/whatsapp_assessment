@@ -39,6 +39,10 @@ class $AssetsImagesGen {
   AssetGenImage get callsFilled =>
       const AssetGenImage('assets/images/calls_filled.png');
 
+  /// File path: assets/images/camera_icon.png
+  AssetGenImage get cameraIcon =>
+      const AssetGenImage('assets/images/camera_icon.png');
+
   /// File path: assets/images/chat_dark_background.jpeg
   AssetGenImage get chatDarkBackground =>
       const AssetGenImage('assets/images/chat_dark_background.jpeg');
@@ -62,9 +66,21 @@ class $AssetsImagesGen {
   AssetGenImage get communitiesFilled =>
       const AssetGenImage('assets/images/communities_filled.png');
 
+  /// File path: assets/images/menu_iconpng.png
+  AssetGenImage get menuIconpng =>
+      const AssetGenImage('assets/images/menu_iconpng.png');
+
   /// File path: assets/images/meta_ai_logo.png
   AssetGenImage get metaAiLogo =>
       const AssetGenImage('assets/images/meta_ai_logo.png');
+
+  /// File path: assets/images/plus_icon.png
+  AssetGenImage get plusIcon =>
+      const AssetGenImage('assets/images/plus_icon.png');
+
+  /// File path: assets/images/search_icon.png
+  AssetGenImage get searchIcon =>
+      const AssetGenImage('assets/images/search_icon.png');
 
   /// File path: assets/images/settings.png
   AssetGenImage get settings =>
@@ -93,13 +109,17 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
     calls,
     callsFilled,
+    cameraIcon,
     chatDarkBackground,
     chatLightBackground,
     chats,
     chatsFilled,
     communities,
     communitiesFilled,
+    menuIconpng,
     metaAiLogo,
+    plusIcon,
+    searchIcon,
     settings,
     settingsFilled,
     status,

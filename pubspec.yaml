@@ -57,15 +57,15 @@ flutter:
   fonts:
     - family: SFPro
       fonts:
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYBLACKITALIC.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYBOLD.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYHEAVYITALIC.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYLIGHTITALIC.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYMEDIUM.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYREGULAR.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYSEMIBOLDITALIC.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYTHINITALIC.OTF
-        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYULTRALIGHTITALIC.OTF
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYBLACKITALIC.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYBOLD.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYHEAVYITALIC.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYLIGHTITALIC.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYMEDIUM.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYREGULAR.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYSEMIBOLDITALIC.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYTHINITALIC.otf
+        - asset: assets/fonts/SFPro_Font/SFPRODISPLAYULTRALIGHTITALIC.otf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
