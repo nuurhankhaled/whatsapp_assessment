@@ -9,5 +9,7 @@ abstract class  LocaleKeys {
   static const communities = 'communities';
   static const chats = 'chats';
   static const settings = 'settings';
+  static const askMetaAIOrSearch = 'askMetaAIOrSearch';
+  static const search = 'search';
 
 }
