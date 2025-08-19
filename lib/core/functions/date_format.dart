@@ -6,15 +6,34 @@ String formatDate(String dateTimeString) {
   return formattedDate;
 }
 
-// String formatTime(String dateTimeString) {
-//   DateTime dateTime = DateTime.parse(dateTimeString);
-//   String formattedDate = DateFormat('HH:mm').format(dateTime);
-//   return formattedDate;
-// }
 String formatTime(String dateTimeString) {
   final DateTime dateTime = DateTime.parse(dateTimeString);
   final String formattedDate = DateFormat('hh:mm a').format(dateTime);
   return formattedDate;
+}
+
+String formatChatTimestamp(DateTime timestamp) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final messageDate = DateTime(timestamp.year, timestamp.month, timestamp.day);
+  final difference = today.difference(messageDate).inDays;
+
+  if (difference == 0) {
+    // Today - show time
+    return DateFormat('h:mm a').format(timestamp);
+  } else if (difference == 1) {
+    // Yesterday
+    return 'Yesterday';
+  } else if (difference < 7) {
+    // This week - show day name
+    return DateFormat('EEEE').format(timestamp);
+  } else if (timestamp.year == now.year) {
+    // This year - show month/day
+    return DateFormat('M/d/y').format(timestamp);
+  } else {
+    // Previous years - show full date
+    return DateFormat('M/d/yyyy').format(timestamp);
+  }
 }
 
 bool isCurrentTimeBetween(String startTimeStr, String endTimeStr) {
@@ -22,13 +41,24 @@ bool isCurrentTimeBetween(String startTimeStr, String endTimeStr) {
   final startTimeParts = startTimeStr.split(':').map(int.parse).toList();
   final endTimeParts = endTimeStr.split(':').map(int.parse).toList();
 
-  final startTime = DateTime(now.year, now.month, now.day, startTimeParts[0],
-      startTimeParts[1], startTimeParts[2]);
-  final endTime = DateTime(now.year, now.month, now.day, endTimeParts[0],
-      endTimeParts[1], endTimeParts[2]);
+  final startTime = DateTime(
+    now.year,
+    now.month,
+    now.day,
+    startTimeParts[0],
+    startTimeParts[1],
+    startTimeParts[2],
+  );
+  final endTime = DateTime(
+    now.year,
+    now.month,
+    now.day,
+    endTimeParts[0],
+    endTimeParts[1],
+    endTimeParts[2],
+  );
 
   if (endTime.isBefore(startTime)) {
-    // End time is on the next day
     return now.isAfter(startTime) || now.isBefore(endTime);
   } else {
     return now.isAfter(startTime) && now.isBefore(endTime);
@@ -36,22 +66,17 @@ bool isCurrentTimeBetween(String startTimeStr, String endTimeStr) {
 }
 
 String reformatDate(String dateStr, String locale) {
-  // Parse the input date string
   final DateTime parsedDate = DateTime.parse(dateStr);
-
-  // Format the date into the desired output with the given locale
-  final String formattedDate =
-      DateFormat('EEEE, dd MMMM yyyy', locale).format(parsedDate);
-
+  final String formattedDate = DateFormat(
+    'EEEE, dd MMMM yyyy',
+    locale,
+  ).format(parsedDate);
   return formattedDate;
 }
 
 int calculateSessionDuration(String startTime, String endTime) {
-  // Parse the times into DateTime objects
   final DateTime start = DateFormat("HH:mm").parse(startTime);
   final DateTime end = DateFormat("HH:mm").parse(endTime);
-
-  // Calculate the duration in minutes
   final Duration duration = end.difference(start);
   return duration.inMinutes;
 }
@@ -61,12 +86,10 @@ String formatDateDifference(String startDate, String endDate) {
   final DateTime end = DateTime.parse(endDate);
 
   final int totalDays = end.difference(start).inDays;
-
-  final int years = (totalDays / 365).floor(); // Approximate years
-  final int remainingDays = totalDays % 365; // Remaining days after full years
-
-  final int months = (remainingDays / 30).floor(); // Approximate months
-  final int days = remainingDays % 30; // Remaining days after full months
+  final int years = (totalDays / 365).floor();
+  final int remainingDays = totalDays % 365;
+  final int months = (remainingDays / 30).floor();
+  final int days = remainingDays % 30;
 
   final List<String> parts = [];
 
@@ -86,12 +109,12 @@ String formatDateDifference(String startDate, String endDate) {
 String getDayName(String dateString) {
   final DateTime date = DateTime.parse(dateString);
   final List<String> days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  return days[date.weekday - 1]; // DateTime weekday starts from 1 (Monday)
+  return days[date.weekday - 1];
 }
 
 String getDayNumber(String dateString) {
   final DateTime date = DateTime.parse(dateString);
-  return date.day.toString().padLeft(2, '0'); // Ensures "01" instead of "1"
+  return date.day.toString().padLeft(2, '0');
 }
 
 String getMonthName(String dateString) {
@@ -108,21 +131,17 @@ String getMonthName(String dateString) {
     "Sep",
     "Oct",
     "Nov",
-    "Dec"
+    "Dec",
   ];
-  return months[date.month - 1]; // DateTime.month starts from 1
+  return months[date.month - 1];
 }
 
 String formatMedicineTime(String time) {
   try {
-    // Parse the given time string
     final DateTime parsedTime = DateFormat("HH:mm:ss").parse(time);
-
-    // Format to 12-hour format with AM/PM
     final String formattedTime = DateFormat("hh:mm a").format(parsedTime);
-
     return formattedTime;
   } catch (e) {
-    return "Invalid time"; // Handle any errors
+    return "Invalid time";
   }
 }

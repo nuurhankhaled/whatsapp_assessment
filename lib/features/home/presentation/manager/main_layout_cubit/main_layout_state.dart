@@ -17,5 +17,3 @@ class AppBottomNavState extends MainLayoutState {
   @override
   List<Object> get props => [currentIndex];
 }
-
-class GOToNotifactionState extends MainLayoutState {}

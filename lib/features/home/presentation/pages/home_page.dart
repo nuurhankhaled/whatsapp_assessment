@@ -3,11 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_assessment/core/constant.dart';
 import 'package:whatsapp_assessment/core/functions/pop_curve.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
+import 'package:whatsapp_assessment/features/chats/presentation/pages/chats_page.dart';
 import 'package:whatsapp_assessment/features/home/presentation/manager/main_layout_cubit/main_layout_cubit.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/camera_button.dart';
+import 'package:whatsapp_assessment/features/home/presentation/widgets/floating_action_button_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/menu_button.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/plus_button_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/sliver_app_bar.dart';
@@ -26,7 +28,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late List<AnimationController> _controllers;
   late List<Animation<double>> _scaleAnimations;
-  bool _isAppBarCollapsed = false;
 
   @override
   void initState() {
@@ -120,48 +121,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         listener: (context, state) {},
         builder: (context, state) {
           final cubit = MainLayoutCubit.get(context);
-          final currentConfig =
-              _tabConfigurations[mainLayoutIntitalScreenIndex] ??
-              const TabAppBarConfig(leftWidget: MenuButton(), rightWidgets: []);
 
           return Scaffold(
             extendBody: true,
+            floatingActionButton: (cubit.selectedIndex == 3)
+                ? const FloatingActionButtonWidget()
+                : null,
             body: PopScope(
               canPop: false,
               onPopInvokedWithResult: (didPop, result) {
                 SystemNavigator.pop();
               },
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  if (scrollNotification is ScrollUpdateNotification) {
-                    final double offset = scrollNotification.metrics.pixels;
-                    setState(() {
-                      _isAppBarCollapsed = offset > 100;
-                    });
-                  }
-                  return false;
-                },
-                child: CustomScrollView(
-                  slivers: <Widget>[
-                    HomeSliverAppBar(
-                      isCollapsed: _isAppBarCollapsed,
-                      config: currentConfig,
-                      titles: titles,
-                      currentIndex: mainLayoutIntitalScreenIndex,
-                    ),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: _buildTabContent(
-                          mainLayoutIntitalScreenIndex,
-                          titles,
-                          context,
-                          currentConfig,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              child: IndexedStack(
+                index: cubit.selectedIndex,
+                children: [
+                  _buildScaffoldPage(0, titles, context), // Updates
+                  _buildScaffoldPage(1, titles, context), // Calls
+                  _buildScaffoldPage(2, titles, context), // Communities
+                  _buildScaffoldPage(3, titles, context), // Chats
+                  _buildScaffoldPage(4, titles, context), // Settings
+                ],
               ),
             ),
             bottomNavigationBar: _buildBottomNavigationBar(
@@ -172,6 +151,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildScaffoldPage(
+    int index,
+    List<Text> titles,
+    BuildContext context,
+  ) {
+    final currentConfig = _tabConfigurations[index] ?? const TabAppBarConfig();
+
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            HomeSliverAppBar(
+              isCollapsed: innerBoxIsScrolled,
+              config: currentConfig,
+              titles: titles,
+              currentIndex: index,
+            ),
+          ];
+        },
+        body: _buildTabContent(index, titles, context, currentConfig),
       ),
     );
   }
@@ -191,8 +195,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       child: BottomNavigationBar(
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
-        currentIndex: mainLayoutIntitalScreenIndex,
-        backgroundColor: Colors.transparent,
+        currentIndex: cubit.selectedIndex,
+        backgroundColor: Colors.white.withAlpha(240),
         elevation: 0,
         selectedLabelStyle: const TextStyle(
           fontFamily: "SFPro",
@@ -226,7 +230,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                 return Transform.scale(
                   scale: scale,
-                  child: mainLayoutIntitalScreenIndex == index
+                  child: cubit.selectedIndex == index
                       ? selectedIcons[index]
                       : unselectedIcons[index],
                 );
@@ -290,17 +294,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ],
         );
       case 3: // Chats
-        return Column(
-          children: [
-            Center(
-              child: Text(
-                appBarTitles[3].data!,
-                style: Theme.of(
-                  context,
-                ).textTheme.headlineMedium?.copyWith(fontFamily: "SFPro"),
-              ),
-            ),
-          ],
+        return BlocProvider(
+          create: (context) => ChatsCubit(),
+          child: const ChatsPage(),
         );
       case 4: // Settings
         return Column(
