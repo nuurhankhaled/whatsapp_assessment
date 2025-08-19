@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_assessment/core/constants/constant.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/core/widgets/search_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/tab_bar_config.dart';
@@ -23,7 +24,7 @@ class HomeSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      expandedHeight: 153.0,
+      expandedHeight: mainLayoutIntitalScreenIndex == 0 ? 120 : 153.0,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       bottom: isCollapsed ? _buildBorder() : null,
@@ -120,7 +121,7 @@ class HomeSliverAppBar extends StatelessWidget {
                     ),
                   ),
                 if (!isCollapsed) const SizedBox(height: 10),
-                if (!isCollapsed)
+                if (!isCollapsed && mainLayoutIntitalScreenIndex != 0)
                   SearchWidget(
                     hintText: currentIndex == 3
                         ? tr(LocaleKeys.askMetaAIOrSearch)

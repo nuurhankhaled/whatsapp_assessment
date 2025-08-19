@@ -17,6 +17,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     selectedFilterIndex = index;
     emit(ChatsFilterState(selectedFilterIndex));
   }
+
   int get totalUnreadCount {
     return chatDataList
         .where((chat) => chat.numberOfUnreadMessages > 0)
@@ -24,27 +25,25 @@ class ChatsCubit extends Cubit<ChatsState> {
   }
 
   int get unreadChatsCount {
-    return chatDataList
-        .where((chat) => chat.numberOfUnreadMessages > 0)
-        .length;
+    return chatDataList.where((chat) => chat.numberOfUnreadMessages > 0).length;
   }
-   List<ChatModel> get filteredChats {
+
+  List<ChatModel> get filteredChats {
     switch (selectedFilterIndex) {
-      case 0: 
+      case 0:
         return chatDataList;
-      case 1: 
+      case 1:
         return chatDataList
             .where((chat) => chat.numberOfUnreadMessages > 0)
             .toList();
-      case 2: 
-        return []; 
-      case 3: 
-        return []; 
+      case 2:
+        return [];
+      case 3:
+        return [];
       default:
         return chatDataList;
     }
   }
-
 
   final List<ChatModel> chatDataList = [
     ChatModel(
@@ -69,7 +68,7 @@ class ChatsCubit extends Cubit<ChatsState> {
       lastMessage: 'Can you send me the project files?',
       timestamp: DateTime(2025, 8, 19, 1, 30), // Today - shows "9:30 PM"
       status: MessageStatusEnum.delivered,
-      numberOfUnreadMessages: 3,
+      numberOfUnreadMessages: 0,
     ),
     ChatModel(
       id: '3',
@@ -116,8 +115,8 @@ class ChatsCubit extends Cubit<ChatsState> {
       ),
       lastMessage: 'Let me know when you arrive',
       timestamp: DateTime(2025, 8, 18, 11, 11), // Today - shows "11:11 AM"
-      status: MessageStatusEnum.sent,
-      numberOfUnreadMessages: 1,
+      status: MessageStatusEnum.recived,
+      numberOfUnreadMessages: 100,
     ),
     ChatModel(
       id: '7',
@@ -218,7 +217,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         19,
         45,
       ), // 3 days ago - shows "8/15/2025"
-      status: MessageStatusEnum.sent,
+      status: MessageStatusEnum.recived,
       numberOfUnreadMessages: 12,
     ),
     ChatModel(
@@ -309,7 +308,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         45,
       ), // 7 days ago - shows "8/11/2025"
       status: MessageStatusEnum.sent,
-      numberOfUnreadMessages: 15,
+      numberOfUnreadMessages: 0,
     ),
     ChatModel(
       id: '19',
@@ -326,7 +325,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         23,
         11,
       ), // 8 days ago - shows "8/10/2025"
-      status: MessageStatusEnum.delivered,
+      status: MessageStatusEnum.recived,
       numberOfUnreadMessages: 3,
     ),
     ChatModel(
