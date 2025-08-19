@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/helpers/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/widgets/my_status_widget.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/widgets/status_card.dart';
 import 'package:whatsapp_assessment/generated/translations/locale_keys.g.dart';
@@ -33,9 +35,11 @@ class UpdatesPage extends StatelessWidget {
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 20,
+            itemCount: context.read<StatusCubit>().statusList.length,
             itemBuilder: (context, index) {
-              return const StatusCard();
+              return StatusCard(
+                model: context.read<StatusCubit>().statusList[index],
+              );
             },
           ),
           verticalSpace(100),

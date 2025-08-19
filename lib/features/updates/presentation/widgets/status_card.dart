@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_assessment/core/functions/date_format.dart';
 import 'package:whatsapp_assessment/core/helpers/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/updates/data/models/status_model.dart';
 
 class StatusCard extends StatelessWidget {
-  const StatusCard({super.key});
-
+  const StatusCard({super.key, required this.model});
+  final StatusModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,13 +27,11 @@ class StatusCard extends StatelessWidget {
             height: 56,
             child: Container(
               alignment: Alignment.center,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: NetworkImage(
-                    'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=400&fit=crop&crop=face',
-                  ),
+                  image: NetworkImage(model.sender.image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -49,7 +49,7 @@ class StatusCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Mama",
+                    model.sender.name,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -57,7 +57,7 @@ class StatusCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "19 m ago",
+                    getRelativeTime(model.timestamp),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       letterSpacing: 0,
                       fontSize: 12.5,
