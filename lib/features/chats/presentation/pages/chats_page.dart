@@ -12,35 +12,64 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          spacing: 8,
+    return BlocBuilder<ChatsCubit, ChatsState>(
+      builder: (context, state) {
+        final cubit = ChatsCubit.get(context);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            horizontalSpace(8),
-            const FiltersListViewWidget(),
-            const GreyPlusButton(),
-            horizontalSpace(8),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                spacing: 8,
+                children: [
+                  horizontalSpace(8),
+                  const FiltersListViewWidget(),
+                  const GreyPlusButton(),
+                  horizontalSpace(8),
+                ],
+              ),
+            ),
+            verticalSpace(5),
+            if (cubit.selectedFilterIndex == 0 ||
+                cubit.selectedFilterIndex == 1)
+              const ArchivedMessagesContainer(),
+            Expanded(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                switchInCurve: Curves.easeInOut,
+                switchOutCurve: Curves.easeInOut,
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+                layoutBuilder:
+                    (Widget? currentChild, List<Widget> previousChildren) {
+                      return Stack(
+                        alignment: Alignment.topCenter,
+                        children: <Widget>[
+                          ...previousChildren,
+                          if (currentChild != null) currentChild,
+                        ],
+                      );
+                    },
+                child: ListView.builder(
+                  key: ValueKey(
+                    '${cubit.filteredChats.length}-${cubit.filteredChats.hashCode}',
+                  ),
+                  padding: EdgeInsets.zero,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: cubit.filteredChats.length,
+                  itemBuilder: (context, index) {
+                    return ChatCard(model: cubit.filteredChats[index]);
+                  },
+                ),
+              ),
+            ),
+            verticalSpace(100),
           ],
-        ),
-        verticalSpace(5),
-        const ArchivedMessagesContainer(),
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: context.read<ChatsCubit>().chatDataList.length,
-            itemBuilder: (context, index) {
-              return ChatCard(
-                model: context.read<ChatsCubit>().chatDataList[index],
-              );
-            },
-          ),
-        ),
-        verticalSpace(100),
-      ],
+        );
+      },
     );
   }
 }

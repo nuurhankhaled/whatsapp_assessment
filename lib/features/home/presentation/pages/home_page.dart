@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_assessment/core/constant.dart';
 import 'package:whatsapp_assessment/core/functions/pop_curve.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
@@ -90,7 +91,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // Keep all dynamic content here for theme/locale changes
     final titles = [
       Text(tr(LocaleKeys.updates)),
       Text(tr(LocaleKeys.calls)),
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
           return Scaffold(
             extendBody: true,
-            floatingActionButton: (cubit.selectedIndex == 3)
+            floatingActionButton: (mainLayoutIntitalScreenIndex == 3)
                 ? const FloatingActionButtonWidget()
                 : null,
             body: PopScope(
@@ -133,13 +133,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 SystemNavigator.pop();
               },
               child: IndexedStack(
-                index: cubit.selectedIndex,
+                index: mainLayoutIntitalScreenIndex,
                 children: [
-                  _buildScaffoldPage(0, titles, context), // Updates
-                  _buildScaffoldPage(1, titles, context), // Calls
-                  _buildScaffoldPage(2, titles, context), // Communities
-                  _buildScaffoldPage(3, titles, context), // Chats
-                  _buildScaffoldPage(4, titles, context), // Settings
+                  _buildScaffoldPage(0, titles, context), 
+                  _buildScaffoldPage(1, titles, context), 
+                  _buildScaffoldPage(2, titles, context), 
+                  _buildScaffoldPage(3, titles, context), 
+                  _buildScaffoldPage(4, titles, context), 
                 ],
               ),
             ),
@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       child: BottomNavigationBar(
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
-        currentIndex: cubit.selectedIndex,
+        currentIndex: mainLayoutIntitalScreenIndex,
         backgroundColor: Colors.white.withAlpha(240),
         elevation: 0,
         selectedLabelStyle: const TextStyle(
@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                 return Transform.scale(
                   scale: scale,
-                  child: cubit.selectedIndex == index
+                  child: mainLayoutIntitalScreenIndex == index
                       ? selectedIcons[index]
                       : unselectedIcons[index],
                 );

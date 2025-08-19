@@ -10,11 +10,41 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   static ChatsCubit get(BuildContext context) =>
       BlocProvider.of<ChatsCubit>(context);
+
   int selectedFilterIndex = 0;
+
   void changeSelectedChatFilter(int index) {
     selectedFilterIndex = index;
     emit(ChatsFilterState(selectedFilterIndex));
   }
+  int get totalUnreadCount {
+    return chatDataList
+        .where((chat) => chat.numberOfUnreadMessages > 0)
+        .fold(0, (sum, chat) => sum + chat.numberOfUnreadMessages);
+  }
+
+  int get unreadChatsCount {
+    return chatDataList
+        .where((chat) => chat.numberOfUnreadMessages > 0)
+        .length;
+  }
+   List<ChatModel> get filteredChats {
+    switch (selectedFilterIndex) {
+      case 0: 
+        return chatDataList;
+      case 1: 
+        return chatDataList
+            .where((chat) => chat.numberOfUnreadMessages > 0)
+            .toList();
+      case 2: 
+        return []; 
+      case 3: 
+        return []; 
+      default:
+        return chatDataList;
+    }
+  }
+
 
   final List<ChatModel> chatDataList = [
     ChatModel(
@@ -270,7 +300,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         image:
             'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face',
       ),
-      lastMessage: 'Let\'s grab lunch this weekend',
+      lastMessage: "Let's grab lunch this weekend",
       timestamp: DateTime(
         2025,
         8,
