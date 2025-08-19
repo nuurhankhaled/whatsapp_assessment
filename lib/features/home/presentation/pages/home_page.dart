@@ -15,6 +15,7 @@ import 'package:whatsapp_assessment/features/home/presentation/widgets/menu_butt
 import 'package:whatsapp_assessment/features/home/presentation/widgets/plus_button_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/sliver_app_bar.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/tab_bar_config.dart';
+import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/pages/updates_page.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 import 'package:whatsapp_assessment/generated/translations/locale_keys.g.dart';
@@ -249,7 +250,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   ) {
     switch (index) {
       case 0: // Updates
-        return UpdatesPage();
+        return BlocProvider(
+          create: (context) => StatusCubit(),
+          child: const UpdatesPage(),
+        );
       case 1: // Calls
         return Column(
           children: [
