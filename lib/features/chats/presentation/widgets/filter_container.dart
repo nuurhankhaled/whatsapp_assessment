@@ -7,36 +7,57 @@ class FilterContainer extends StatelessWidget {
   const FilterContainer({super.key, required this.filterIndex});
   final int filterIndex;
   static const List<String> filters = ['All', 'Unread', 'Favourite', 'Groups'];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChatsCubit, ChatsState>(
       builder: (context, state) {
+        final cubit = context.read<ChatsCubit>();
+        final isSelected = filterIndex == cubit.selectedFilterIndex;
+
         return GestureDetector(
           onTap: () {
-            context.read<ChatsCubit>().changeSelectedChatFilter(filterIndex);
+            cubit.changeSelectedChatFilter(filterIndex);
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
             decoration: BoxDecoration(
-              color:
-                  (filterIndex ==
-                      context.read<ChatsCubit>().selectedFilterIndex)
+              color: isSelected
                   ? AppColors.chatActiveFilterBackground
                   : AppColors.lightGreyBackground,
               borderRadius: BorderRadius.circular(19.0),
             ),
             child: Center(
-              child: Text(
-                filters[filterIndex],
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color:
-                      (filterIndex ==
-                          context.read<ChatsCubit>().selectedFilterIndex)
-                      ? AppColors.chatActiveFilterText
-                      : AppColors.textSecondary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    filters[filterIndex],
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: isSelected
+                          ? AppColors.chatActiveFilterText
+                          : AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  if (filterIndex == 1 && cubit.unreadChatsCount > 0)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                      child: Text(
+                        cubit.unreadChatsCount > 99
+                            ? '99+'
+                            : cubit.unreadChatsCount.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: isSelected
+                              ? AppColors.chatActiveFilterText
+                              : AppColors.textSecondary,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
