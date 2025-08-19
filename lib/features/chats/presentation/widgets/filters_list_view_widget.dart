@@ -10,6 +10,8 @@ class FiltersListViewWidget extends StatelessWidget {
     return SizedBox(
       height: 34,
       child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return FilterContainer(filterIndex: index);
         },
@@ -18,7 +20,6 @@ class FiltersListViewWidget extends StatelessWidget {
         },
         shrinkWrap: true,
         itemCount: 4,
-        scrollDirection: Axis.horizontal,
       ),
     );
   }
