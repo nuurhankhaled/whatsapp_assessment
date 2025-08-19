@@ -145,3 +145,24 @@ String formatMedicineTime(String time) {
     return "Invalid time";
   }
 }
+
+String getRelativeTime(DateTime timestamp) {
+  final now = DateTime.now().toUtc();
+  final difference = now.difference(timestamp);
+
+  if (difference.inSeconds < 60) {
+    return 'now';
+  } else if (difference.inMinutes < 60) {
+    final minutes = difference.inMinutes;
+    return '${minutes}m ago';
+  } else if (difference.inHours < 24) {
+    final hours = difference.inHours;
+    return '${hours}h ago';
+  } else if (difference.inDays < 7) {
+    final days = difference.inDays;
+    return '${days}d ago';
+  } else {
+    // For older than a week, show the actual date
+    return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
+  }
+}
