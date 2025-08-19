@@ -9,9 +9,10 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
 
   static MainLayoutCubit get(BuildContext context) =>
       BlocProvider.of<MainLayoutCubit>(context);
-
+  int selectedIndex = 0;
   void changeBottomNavBarIndex(int index) {
     mainLayoutIntitalScreenIndex = index;
+    selectedIndex = index;
     emit(AppBottomNavState(mainLayoutIntitalScreenIndex));
   }
 }

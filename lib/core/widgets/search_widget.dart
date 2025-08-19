@@ -10,7 +10,7 @@ class SearchWidget extends StatelessWidget {
     return Container(
       height: 36,
       decoration: BoxDecoration(
-        color: AppColors.textFieldBackground,
+        color: AppColors.lightGreyBackground,
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(

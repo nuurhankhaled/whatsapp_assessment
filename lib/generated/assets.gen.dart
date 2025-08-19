@@ -32,6 +32,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/archived.png
+  AssetGenImage get archived =>
+      const AssetGenImage('assets/images/archived.png');
+
   /// File path: assets/images/calls.png
   AssetGenImage get calls => const AssetGenImage('assets/images/calls.png');
 
@@ -66,6 +70,14 @@ class $AssetsImagesGen {
   AssetGenImage get communitiesFilled =>
       const AssetGenImage('assets/images/communities_filled.png');
 
+  /// File path: assets/images/delivered_message.png
+  AssetGenImage get deliveredMessage =>
+      const AssetGenImage('assets/images/delivered_message.png');
+
+  /// File path: assets/images/grey_plus.png
+  AssetGenImage get greyPlus =>
+      const AssetGenImage('assets/images/grey_plus.png');
+
   /// File path: assets/images/menu_iconpng.png
   AssetGenImage get menuIconpng =>
       const AssetGenImage('assets/images/menu_iconpng.png');
@@ -81,6 +93,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/search_icon.png
   AssetGenImage get searchIcon =>
       const AssetGenImage('assets/images/search_icon.png');
+
+  /// File path: assets/images/seen_message.png
+  AssetGenImage get seenMessage =>
+      const AssetGenImage('assets/images/seen_message.png');
+
+  /// File path: assets/images/sent_message.png
+  AssetGenImage get sentMessage =>
+      const AssetGenImage('assets/images/sent_message.png');
 
   /// File path: assets/images/settings.png
   AssetGenImage get settings =>
@@ -107,6 +127,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    archived,
     calls,
     callsFilled,
     cameraIcon,
@@ -116,10 +137,14 @@ class $AssetsImagesGen {
     chatsFilled,
     communities,
     communitiesFilled,
+    deliveredMessage,
+    greyPlus,
     menuIconpng,
     metaAiLogo,
     plusIcon,
     searchIcon,
+    seenMessage,
+    sentMessage,
     settings,
     settingsFilled,
     status,

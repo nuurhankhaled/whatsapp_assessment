@@ -23,7 +23,7 @@ class HomeSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      expandedHeight: 196.0,
+      expandedHeight: 153.0,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       bottom: isCollapsed ? _buildBorder() : null,
@@ -57,10 +57,7 @@ class HomeSliverAppBar extends StatelessWidget {
             left: 0,
             top: 0,
             bottom: 0,
-            child: Align(
-              alignment: Alignment.center,
-              child: config.leftWidget ?? const SizedBox(width: 0),
-            ),
+            child: Align(child: config.leftWidget ?? const SizedBox(width: 0)),
           ),
           // Right widgets
           Positioned(
@@ -108,7 +105,7 @@ class HomeSliverAppBar extends StatelessWidget {
             padding: const EdgeInsets.only(
               left: 16.0,
               right: 16.0,
-              top: kToolbarHeight,
+              top: kToolbarHeight - 10,
               bottom: 8.0,
             ),
             child: Column(
