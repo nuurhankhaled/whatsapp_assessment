@@ -15,27 +15,27 @@ class ChatsPage extends StatelessWidget {
     return BlocBuilder<ChatsCubit, ChatsState>(
       builder: (context, state) {
         final cubit = ChatsCubit.get(context);
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                spacing: 8,
-                children: [
-                  horizontalSpace(8),
-                  const FiltersListViewWidget(),
-                  const GreyPlusButton(),
-                  horizontalSpace(8),
-                ],
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    horizontalSpace(8),
+                    const FiltersListViewWidget(),
+                    const GreyPlusButton(),
+                    horizontalSpace(8),
+                  ],
+                ),
               ),
-            ),
-            verticalSpace(5),
-            if (cubit.selectedFilterIndex == 0 ||
-                cubit.selectedFilterIndex == 1)
-              const ArchivedMessagesContainer(),
-            Expanded(
-              child: AnimatedSwitcher(
+              verticalSpace(5),
+              if (cubit.selectedFilterIndex == 0 ||
+                  cubit.selectedFilterIndex == 1)
+                const ArchivedMessagesContainer(),
+              AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 switchInCurve: Curves.easeInOut,
                 switchOutCurve: Curves.easeInOut,
@@ -57,7 +57,7 @@ class ChatsPage extends StatelessWidget {
                     '${cubit.filteredChats.length}-${cubit.filteredChats.hashCode}',
                   ),
                   padding: EdgeInsets.zero,
-                  physics: const AlwaysScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: cubit.filteredChats.length,
                   itemBuilder: (context, index) {
@@ -65,9 +65,9 @@ class ChatsPage extends StatelessWidget {
                   },
                 ),
               ),
-            ),
-            verticalSpace(100),
-          ],
+              verticalSpace(100),
+            ],
+          ),
         );
       },
     );
