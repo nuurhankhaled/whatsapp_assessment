@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_assessment/core/constant.dart';
+import 'package:whatsapp_assessment/core/constants/constant.dart';
 import 'package:whatsapp_assessment/core/functions/pop_curve.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
@@ -15,6 +15,7 @@ import 'package:whatsapp_assessment/features/home/presentation/widgets/menu_butt
 import 'package:whatsapp_assessment/features/home/presentation/widgets/plus_button_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/sliver_app_bar.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/tab_bar_config.dart';
+import 'package:whatsapp_assessment/features/updates/presentation/pages/updates_page.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 import 'package:whatsapp_assessment/generated/translations/locale_keys.g.dart';
 
@@ -135,11 +136,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: IndexedStack(
                 index: mainLayoutIntitalScreenIndex,
                 children: [
-                  _buildScaffoldPage(0, titles, context), 
-                  _buildScaffoldPage(1, titles, context), 
-                  _buildScaffoldPage(2, titles, context), 
-                  _buildScaffoldPage(3, titles, context), 
-                  _buildScaffoldPage(4, titles, context), 
+                  _buildScaffoldPage(0, titles, context),
+                  _buildScaffoldPage(1, titles, context),
+                  _buildScaffoldPage(2, titles, context),
+                  _buildScaffoldPage(3, titles, context),
+                  _buildScaffoldPage(4, titles, context),
                 ],
               ),
             ),
@@ -219,15 +220,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               builder: (context, child) {
                 final progress = _controllers[index].value;
                 double scale;
-
                 if (progress <= 0.5) {
                   scale = 1.0 + (progress * 2 * 0.1);
                 } else {
                   scale = 1.1 - ((progress - 0.5) * 2 * 0.2);
                 }
-
                 scale = scale.clamp(1.0, 1.1);
-
                 return Transform.scale(
                   scale: scale,
                   child: mainLayoutIntitalScreenIndex == index
@@ -251,22 +249,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   ) {
     switch (index) {
       case 0: // Updates
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                appBarTitles[0].data!,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Updates content goes here',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
-              ),
-            ],
-          ),
-        );
+        return UpdatesPage();
       case 1: // Calls
         return Column(
           children: [
