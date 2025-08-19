@@ -11,5 +11,7 @@ abstract class  LocaleKeys {
   static const settings = 'settings';
   static const askMetaAIOrSearch = 'askMetaAIOrSearch';
   static const search = 'search';
+  static const status = 'status';
+  static const recenentUpdates = 'recenentUpdates';
 
 }

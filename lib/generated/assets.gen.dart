@@ -32,6 +32,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/add_photo.png
+  AssetGenImage get addPhoto =>
+      const AssetGenImage('assets/images/add_photo.png');
+
   /// File path: assets/images/archived.png
   AssetGenImage get archived =>
       const AssetGenImage('assets/images/archived.png');
@@ -117,6 +121,9 @@ class $AssetsImagesGen {
   AssetGenImage get statusFilled =>
       const AssetGenImage('assets/images/status_filled.png');
 
+  /// File path: assets/images/type.png
+  AssetGenImage get type => const AssetGenImage('assets/images/type.png');
+
   /// File path: assets/images/whatsapp_dark_mood_icon.png
   AssetGenImage get whatsappDarkMoodIcon =>
       const AssetGenImage('assets/images/whatsapp_dark_mood_icon.png');
@@ -127,6 +134,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    addPhoto,
     archived,
     calls,
     callsFilled,
@@ -149,6 +157,7 @@ class $AssetsImagesGen {
     settingsFilled,
     status,
     statusFilled,
+    type,
     whatsappDarkMoodIcon,
     whatsappLightMoodIcon,
   ];
