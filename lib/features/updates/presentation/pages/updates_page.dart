@@ -39,6 +39,7 @@ class UpdatesPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return StatusCard(
                 model: context.read<StatusCubit>().statusList[index],
+                index: index,
               );
             },
           ),

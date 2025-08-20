@@ -21,8 +21,11 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(minutes: 30),
       ), // 30m ago
-      status:
-          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600",
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_002",
@@ -34,8 +37,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 1),
       ), // 1h ago
-      status:
-          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=600",
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_003",
@@ -47,8 +52,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 2),
       ), // 2h ago
-      status:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_004",
@@ -60,8 +66,12 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 3),
       ), // 3h ago
-      status:
-          "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=600",
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+        "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=400&h=600",
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_005",
@@ -73,8 +83,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 4),
       ), // 4h ago
-      status:
-          "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&h=600",
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_006",
@@ -86,8 +98,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 5),
       ), // 5h ago
-      status:
-          "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_007",
@@ -99,8 +112,11 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 6),
       ), // 6h ago
-      status:
-          "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600",
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_008",
@@ -112,8 +128,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 7),
       ), // 7h ago
-      status:
-          "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_009",
@@ -125,8 +142,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 8),
       ), // 8h ago
-      status:
-          "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+        "https://images.unsplash.com/photo-1520637836862-4d197d17c92a?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_010",
@@ -138,8 +157,13 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 9),
       ), // 9h ago
-      status:
-          "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=600",
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_011",
@@ -151,8 +175,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 10),
       ), // 10h ago
-      status:
-          "https://images.unsplash.com/photo-1520637836862-4d197d17c92a?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1520637836862-4d197d17c92a?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_012",
@@ -164,8 +189,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 11),
       ), // 11h ago
-      status:
-          "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_013",
@@ -177,8 +204,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 12),
       ), // 12h ago
-      status:
-          "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_014",
@@ -190,8 +218,11 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 15),
       ), // 15h ago
-      status:
-          "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_015",
@@ -203,8 +234,13 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(days: 1),
       ), // 1d ago
-      status:
-          "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+      ],
     ),
   ];
+
+
+
+
 }
