@@ -2,7 +2,7 @@ class StatusModel {
   final String id;
   final Sender sender;
   final DateTime timestamp;
-  final List<String> stories; // Changed from single status to list of stories
+  final List<String> stories; 
 
   StatusModel({
     required this.id,

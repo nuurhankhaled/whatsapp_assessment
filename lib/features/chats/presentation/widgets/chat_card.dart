@@ -12,13 +12,13 @@ class ChatCard extends StatelessWidget {
   String _getStatusIcon() {
     switch (model.status) {
       case MessageStatusEnum.sent:
-        return Assets.images.sentMessage.path; // You might want different icons
+        return Assets.images.sentMessage.path; 
       case MessageStatusEnum.delivered:
         return Assets.images.deliveredMessage.path;
       case MessageStatusEnum.seen:
         return Assets.images.seenMessage.path;
       case MessageStatusEnum.recived:
-        return ''; // No icon for received messages
+        return ''; 
     }
   }
 
@@ -56,7 +56,7 @@ class ChatCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 10), // Top padding
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
@@ -80,7 +80,7 @@ class ChatCard extends StatelessWidget {
                                   color: model.numberOfUnreadMessages > 0
                                       ? const Color(
                                           0xFF1DAB61,
-                                        ) // Green for unread
+                                        ) 
                                       : AppColors.textSecondary,
                                 ),
                           ),
@@ -95,7 +95,6 @@ class ChatCard extends StatelessWidget {
                               child: Text.rich(
                                 TextSpan(
                                   children: [
-                                    // Only show status icon for non-received messages
                                     if (model.status !=
                                             MessageStatusEnum.recived &&
                                         _getStatusIcon().isNotEmpty)
@@ -122,7 +121,7 @@ class ChatCard extends StatelessWidget {
                                             fontWeight:
                                                 model.numberOfUnreadMessages > 0
                                                 ? FontWeight
-                                                      .w500 // Bold for unread
+                                                      .w500 
                                                 : FontWeight.w400,
                                             color: AppColors.textSecondary,
                                           ),
@@ -134,7 +133,6 @@ class ChatCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            // Unread badge widget built inline
                             if (model.numberOfUnreadMessages > 0)
                               Padding(
                                 padding: const EdgeInsets.only(top: 2),
@@ -147,7 +145,7 @@ class ChatCard extends StatelessWidget {
                                     horizontal: 6,
                                   ),
                                   decoration: const BoxDecoration(
-                                    color: Color(0xFF1DAB61), // WhatsApp green
+                                    color: Color(0xFF1DAB61), 
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(10),
                                     ),
