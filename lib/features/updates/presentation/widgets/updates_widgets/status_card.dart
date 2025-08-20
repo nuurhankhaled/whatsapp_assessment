@@ -5,7 +5,7 @@ import 'package:whatsapp_assessment/core/helpers/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/updates/data/models/status_model.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
-import 'package:whatsapp_assessment/features/updates/presentation/widgets/status_view.dart';
+import 'package:whatsapp_assessment/features/updates/presentation/pages/status_view_page.dart';
 
 class StatusCard extends StatelessWidget {
   const StatusCard({super.key, required this.model, required this.index});
