@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,12 @@ class StatusCubit extends Cubit<StatusState> {
   static StatusCubit get(BuildContext context) =>
       BlocProvider.of<StatusCubit>(context);
 
+  int currentPersonIndex = 0;
+  int currentStoryIndex = 0;
+  bool isPaused = false;
+  bool isTransitioning = false;
+  Timer? _storyTimer;
+
   List<StatusModel> statusList = [
     StatusModel(
       id: "status_001",
@@ -21,8 +28,11 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(minutes: 30),
       ), // 30m ago
-      status:
-          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600",
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_002",
@@ -34,8 +44,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 1),
       ), // 1h ago
-      status:
-          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=600",
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_003",
@@ -47,8 +59,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 2),
       ), // 2h ago
-      status:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_004",
@@ -60,8 +73,12 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 3),
       ), // 3h ago
-      status:
-          "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=600",
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+        "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=400&h=600",
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_005",
@@ -73,8 +90,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 4),
       ), // 4h ago
-      status:
-          "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&h=600",
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_006",
@@ -86,8 +105,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 5),
       ), // 5h ago
-      status:
-          "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_007",
@@ -99,8 +119,11 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 6),
       ), // 6h ago
-      status:
-          "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600",
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_008",
@@ -112,8 +135,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 7),
       ), // 7h ago
-      status:
-          "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_009",
@@ -125,8 +149,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 8),
       ), // 8h ago
-      status:
-          "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+        "https://images.unsplash.com/photo-1520637836862-4d197d17c92a?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_010",
@@ -138,8 +164,13 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 9),
       ), // 9h ago
-      status:
-          "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=600",
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_011",
@@ -151,8 +182,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 10),
       ), // 10h ago
-      status:
-          "https://images.unsplash.com/photo-1520637836862-4d197d17c92a?w=400&h=600",
+      stories: [
+        "https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg",
+      ],
     ),
     StatusModel(
       id: "status_012",
@@ -164,8 +196,10 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 11),
       ), // 11h ago
-      status:
-          "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=600",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_013",
@@ -177,8 +211,9 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 12),
       ), // 12h ago
-      status:
-          "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_014",
@@ -190,8 +225,11 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(hours: 15),
       ), // 15h ago
-      status:
-          "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=600",
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+        "https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d9?w=400&h=600",
+      ],
     ),
     StatusModel(
       id: "status_015",
@@ -203,8 +241,175 @@ class StatusCubit extends Cubit<StatusState> {
       timestamp: DateTime.now().toUtc().subtract(
         const Duration(days: 1),
       ), // 1d ago
-      status:
-          "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+      stories: [
+        "https://images.unsplash.com/photo-1499336315816-097655dcfbda?w=400&h=600",
+      ],
     ),
   ];
+
+  void initializeStoryViewer(int initialIndex) {
+    currentPersonIndex = initialIndex;
+    currentStoryIndex = 0;
+    isPaused = false;
+    isTransitioning = false;
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void startStoryTimer(VoidCallback onStoryComplete) {
+    if (isTransitioning) return;
+
+    _storyTimer?.cancel();
+    _storyTimer = Timer(const Duration(seconds: 5), onStoryComplete);
+  }
+
+  void cancelStoryTimer() {
+    _storyTimer?.cancel();
+  }
+
+  void nextStory() {
+    if (isTransitioning) return;
+
+    final currentPerson = statusList[currentPersonIndex];
+
+    if (currentStoryIndex < currentPerson.stories.length - 1) {
+      currentStoryIndex++;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    } else {
+      _moveToNextPerson();
+    }
+  }
+
+  void previousStory() {
+    if (isTransitioning) return;
+
+    if (currentStoryIndex > 0) {
+      currentStoryIndex--;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    } else {
+      _moveToPreviousPerson();
+    }
+  }
+
+  void _moveToNextPerson() {
+    if (currentPersonIndex < statusList.length - 1) {
+      isTransitioning = true;
+      currentPersonIndex++;
+      currentStoryIndex = 0;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    }
+  }
+
+  void _moveToPreviousPerson() {
+    if (currentPersonIndex > 0) {
+      final previousPersonIndex = currentPersonIndex - 1;
+      final previousPersonLastStory =
+          statusList[previousPersonIndex].stories.length - 1;
+
+      isTransitioning = true;
+      currentPersonIndex = previousPersonIndex;
+      currentStoryIndex = previousPersonLastStory;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    }
+  }
+
+  void onPageTransitionComplete() {
+    isTransitioning = false;
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void pauseStory() {
+    isPaused = true;
+    cancelStoryTimer();
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void resumeStory() {
+    if (isTransitioning) return;
+    isPaused = false;
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void onPageChanged(int index) {
+    if (!isTransitioning && index != currentPersonIndex) {
+      currentPersonIndex = index;
+      currentStoryIndex = 0;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    }
+  }
+
+  bool shouldExitViewer() {
+    return currentPersonIndex >= statusList.length - 1;
+  }
+
+  StatusModel get currentPerson => statusList[currentPersonIndex];
+  String get currentStoryUrl => currentPerson.stories[currentStoryIndex];
+
+  @override
+  Future<void> close() {
+    _storyTimer?.cancel();
+    return super.close();
+  }
 }

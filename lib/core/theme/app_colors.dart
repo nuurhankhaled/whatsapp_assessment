@@ -21,6 +21,5 @@ class AppColors {
   //borders:
   static const navBarBorder = Color(0xFFb2b2b2);
 
-  // icons:
-  static const icon = Color(0xFF475569);
+  
 }

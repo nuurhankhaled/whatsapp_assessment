@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/helpers/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
-import 'package:whatsapp_assessment/features/updates/presentation/widgets/my_status_widget.dart';
-import 'package:whatsapp_assessment/features/updates/presentation/widgets/status_card.dart';
+import 'package:whatsapp_assessment/features/updates/presentation/widgets/updates_widgets/my_status_widget.dart';
+import 'package:whatsapp_assessment/features/updates/presentation/widgets/updates_widgets/status_card.dart';
 import 'package:whatsapp_assessment/generated/translations/locale_keys.g.dart';
 
 class UpdatesPage extends StatelessWidget {
@@ -39,6 +39,7 @@ class UpdatesPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return StatusCard(
                 model: context.read<StatusCubit>().statusList[index],
+                index: index,
               );
             },
           ),
