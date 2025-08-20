@@ -74,6 +74,22 @@ class $AssetsImagesGen {
   AssetGenImage get communitiesFilled =>
       const AssetGenImage('assets/images/communities_filled.png');
 
+  /// File path: assets/images/convo_camera.png
+  AssetGenImage get convoCamera =>
+      const AssetGenImage('assets/images/convo_camera.png');
+
+  /// File path: assets/images/convo_phone_icon.png
+  AssetGenImage get convoPhoneIcon =>
+      const AssetGenImage('assets/images/convo_phone_icon.png');
+
+  /// File path: assets/images/convo_plus_icon.png
+  AssetGenImage get convoPlusIcon =>
+      const AssetGenImage('assets/images/convo_plus_icon.png');
+
+  /// File path: assets/images/convo_video_icon.png
+  AssetGenImage get convoVideoIcon =>
+      const AssetGenImage('assets/images/convo_video_icon.png');
+
   /// File path: assets/images/delivered_message.png
   AssetGenImage get deliveredMessage =>
       const AssetGenImage('assets/images/delivered_message.png');
@@ -89,6 +105,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/meta_ai_logo.png
   AssetGenImage get metaAiLogo =>
       const AssetGenImage('assets/images/meta_ai_logo.png');
+
+  /// File path: assets/images/mic.png
+  AssetGenImage get mic => const AssetGenImage('assets/images/mic.png');
 
   /// File path: assets/images/plus_icon.png
   AssetGenImage get plusIcon =>
@@ -121,6 +140,9 @@ class $AssetsImagesGen {
   AssetGenImage get statusFilled =>
       const AssetGenImage('assets/images/status_filled.png');
 
+  /// File path: assets/images/sticker.png
+  AssetGenImage get sticker => const AssetGenImage('assets/images/sticker.png');
+
   /// File path: assets/images/type.png
   AssetGenImage get type => const AssetGenImage('assets/images/type.png');
 
@@ -145,10 +167,15 @@ class $AssetsImagesGen {
     chatsFilled,
     communities,
     communitiesFilled,
+    convoCamera,
+    convoPhoneIcon,
+    convoPlusIcon,
+    convoVideoIcon,
     deliveredMessage,
     greyPlus,
     menuIconpng,
     metaAiLogo,
+    mic,
     plusIcon,
     searchIcon,
     seenMessage,
@@ -157,6 +184,7 @@ class $AssetsImagesGen {
     settingsFilled,
     status,
     statusFilled,
+    sticker,
     type,
     whatsappDarkMoodIcon,
     whatsappLightMoodIcon,
