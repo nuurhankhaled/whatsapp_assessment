@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,12 @@ class StatusCubit extends Cubit<StatusState> {
 
   static StatusCubit get(BuildContext context) =>
       BlocProvider.of<StatusCubit>(context);
+
+  int currentPersonIndex = 0;
+  int currentStoryIndex = 0;
+  bool isPaused = false;
+  bool isTransitioning = false;
+  Timer? _storyTimer;
 
   List<StatusModel> statusList = [
     StatusModel(
@@ -176,7 +183,7 @@ class StatusCubit extends Cubit<StatusState> {
         const Duration(hours: 10),
       ), // 10h ago
       stories: [
-        "https://images.unsplash.com/photo-1520637836862-4d197d17c92a?w=400&h=600",
+        "https://iso.500px.com/wp-content/uploads/2016/02/stock-photo-114337435-1500x1000.jpg",
       ],
     ),
     StatusModel(
@@ -240,7 +247,169 @@ class StatusCubit extends Cubit<StatusState> {
     ),
   ];
 
+  void initializeStoryViewer(int initialIndex) {
+    currentPersonIndex = initialIndex;
+    currentStoryIndex = 0;
+    isPaused = false;
+    isTransitioning = false;
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
 
+  void startStoryTimer(VoidCallback onStoryComplete) {
+    if (isTransitioning) return;
 
+    _storyTimer?.cancel();
+    _storyTimer = Timer(const Duration(seconds: 5), onStoryComplete);
+  }
 
+  void cancelStoryTimer() {
+    _storyTimer?.cancel();
+  }
+
+  void nextStory() {
+    if (isTransitioning) return;
+
+    final currentPerson = statusList[currentPersonIndex];
+
+    if (currentStoryIndex < currentPerson.stories.length - 1) {
+      currentStoryIndex++;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    } else {
+      _moveToNextPerson();
+    }
+  }
+
+  void previousStory() {
+    if (isTransitioning) return;
+
+    if (currentStoryIndex > 0) {
+      currentStoryIndex--;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    } else {
+      _moveToPreviousPerson();
+    }
+  }
+
+  void _moveToNextPerson() {
+    if (currentPersonIndex < statusList.length - 1) {
+      isTransitioning = true;
+      currentPersonIndex++;
+      currentStoryIndex = 0;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    }
+  }
+
+  void _moveToPreviousPerson() {
+    if (currentPersonIndex > 0) {
+      final previousPersonIndex = currentPersonIndex - 1;
+      final previousPersonLastStory =
+          statusList[previousPersonIndex].stories.length - 1;
+
+      isTransitioning = true;
+      currentPersonIndex = previousPersonIndex;
+      currentStoryIndex = previousPersonLastStory;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    }
+  }
+
+  void onPageTransitionComplete() {
+    isTransitioning = false;
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void pauseStory() {
+    isPaused = true;
+    cancelStoryTimer();
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void resumeStory() {
+    if (isTransitioning) return;
+    isPaused = false;
+    emit(
+      StoryViewerUpdated(
+        personIndex: currentPersonIndex,
+        storyIndex: currentStoryIndex,
+        isPaused: isPaused,
+        isTransitioning: isTransitioning,
+      ),
+    );
+  }
+
+  void onPageChanged(int index) {
+    if (!isTransitioning && index != currentPersonIndex) {
+      currentPersonIndex = index;
+      currentStoryIndex = 0;
+      emit(
+        StoryViewerUpdated(
+          personIndex: currentPersonIndex,
+          storyIndex: currentStoryIndex,
+          isPaused: isPaused,
+          isTransitioning: isTransitioning,
+        ),
+      );
+    }
+  }
+
+  bool shouldExitViewer() {
+    return currentPersonIndex >= statusList.length - 1;
+  }
+
+  StatusModel get currentPerson => statusList[currentPersonIndex];
+  String get currentStoryUrl => currentPerson.stories[currentStoryIndex];
+
+  @override
+  Future<void> close() {
+    _storyTimer?.cancel();
+    return super.close();
+  }
 }
