@@ -17,15 +17,10 @@ class ChatsCubit extends Cubit<ChatsState> {
     selectedFilterIndex = index;
     emit(ChatsFilterState(selectedFilterIndex));
   }
-
-  int get totalUnreadCount {
-    return chatDataList
-        .where((chat) => chat.numberOfUnreadMessages > 0)
-        .fold(0, (sum, chat) => sum + chat.numberOfUnreadMessages);
-  }
-
+  int  unreadChatsNum = 0;
   int get unreadChatsCount {
-    return chatDataList.where((chat) => chat.numberOfUnreadMessages > 0).length;
+    unreadChatsNum = chatDataList.where((chat) => chat.numberOfUnreadMessages > 0).length;
+    return unreadChatsNum;
   }
 
   List<ChatModel> get filteredChats {

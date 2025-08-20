@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_assessment/core/helpers/spacing.dart';
+import 'package:whatsapp_assessment/core/extensions/spacing.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/widgets/filter_container.dart';
 
 class FiltersListViewWidget extends StatelessWidget {
@@ -16,7 +16,7 @@ class FiltersListViewWidget extends StatelessWidget {
           return FilterContainer(filterIndex: index);
         },
         separatorBuilder: (context, index) {
-          return horizontalSpace(8);
+          return context.horizontalSpace(8);
         },
         shrinkWrap: true,
         itemCount: 4,

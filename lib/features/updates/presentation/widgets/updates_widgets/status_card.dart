@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_assessment/core/extensions/spacing.dart';
 import 'package:whatsapp_assessment/core/functions/date_format.dart';
-import 'package:whatsapp_assessment/core/helpers/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/updates/data/models/status_model.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
@@ -87,7 +87,7 @@ class StatusCard extends StatelessWidget {
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    verticalSpace(5),
+                    context.verticalSpace(5),
                   ],
                 ),
               ),

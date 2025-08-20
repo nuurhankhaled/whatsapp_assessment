@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_assessment/core/helpers/spacing.dart';
+import 'package:whatsapp_assessment/core/extensions/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/widgets/updates_widgets/my_status_widget.dart';
@@ -18,7 +18,7 @@ class UpdatesPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const MyStatusWidget(),
-          verticalSpace(15),
+          context.verticalSpace(15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
@@ -30,7 +30,7 @@ class UpdatesPage extends StatelessWidget {
               ),
             ),
           ),
-          verticalSpace(6),
+          context.verticalSpace(6),
           ListView.builder(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
@@ -43,7 +43,7 @@ class UpdatesPage extends StatelessWidget {
               );
             },
           ),
-          verticalSpace(100),
+          context.verticalSpace(100),
         ],
       ),
     );

@@ -1,7 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/functions/date_format.dart';
-import 'package:whatsapp_assessment/core/helpers/extensions.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
 
 class StoryUserInfoWidget extends StatelessWidget {
@@ -28,7 +28,7 @@ class StoryUserInfoWidget extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                onPressed: () => context.pop(),
+                onPressed: () => context.router.back(),
                 icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: Colors.white,
