@@ -121,6 +121,10 @@ class $AssetsImagesGen {
   AssetGenImage get seenMessage =>
       const AssetGenImage('assets/images/seen_message.png');
 
+  /// File path: assets/images/send_button.png
+  AssetGenImage get sendButton =>
+      const AssetGenImage('assets/images/send_button.png');
+
   /// File path: assets/images/sent_message.png
   AssetGenImage get sentMessage =>
       const AssetGenImage('assets/images/sent_message.png');
@@ -179,6 +183,7 @@ class $AssetsImagesGen {
     plusIcon,
     searchIcon,
     seenMessage,
+    sendButton,
     sentMessage,
     settings,
     settingsFilled,
