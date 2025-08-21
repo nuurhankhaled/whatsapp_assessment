@@ -23,5 +23,5 @@ class AppColors {
   static const navBarBorder = Color(0xFFb2b2b2);
 
   //chat bubble
-  
+  static const chatBubbleSender = Color(0xFFD0FECF);
 }
