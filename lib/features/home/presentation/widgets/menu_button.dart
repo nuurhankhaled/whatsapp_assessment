@@ -9,22 +9,29 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 28,
-      height: 28,
-      padding: const EdgeInsets.all(2.0),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.grey.shade900.withAlpha(170)
-            : AppColors.iconBackground,
-      ),
-      child: Image.asset(
-        Assets.images.menuIconpng.path,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
-      ),
+    return BlocConsumer<ChangeThemeCubit, ChangeThemeStates>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return Container(
+          width: 28,
+          height: 28,
+          padding: const EdgeInsets.all(2.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: context.read<ChangeThemeCubit>().isDark
+                ? Colors.grey.shade900.withAlpha(170)
+                : AppColors.iconBackground,
+          ),
+          child: Image.asset(
+            Assets.images.menuIconpng.path,
+            color: context.read<ChangeThemeCubit>().isDark
+                ? Colors.white
+                : Colors.black,
+          ),
+        );
+      },
     );
   }
 }

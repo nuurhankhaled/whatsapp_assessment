@@ -24,16 +24,20 @@ class HomeSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      expandedHeight: mainLayoutIntitalScreenIndex == 0 ? 120 : 153.0,
-      automaticallyImplyLeading: false,
-      backgroundColor: context.read<ChangeThemeCubit>().isDark
-          ? Colors.black.withAlpha(240)
-          : Colors.white,
-      bottom: isCollapsed ? _buildBorder(context) : null,
-      title: _buildTitle(context),
-      flexibleSpace: _buildFlexibleSpace(context),
+    return BlocBuilder<ChangeThemeCubit, ChangeThemeStates>(
+      builder: (context, state) {
+        return SliverAppBar(
+          pinned: true,
+          expandedHeight: mainLayoutIntitalScreenIndex == 0 ? 120 : 153.0,
+          automaticallyImplyLeading: false,
+          backgroundColor: context.read<ChangeThemeCubit>().isDark
+              ? Colors.black.withAlpha(240)
+              : Colors.white,
+          bottom: isCollapsed ? _buildBorder(context) : null,
+          title: _buildTitle(context),
+          flexibleSpace: _buildFlexibleSpace(context),
+        );
+      },
     );
   }
 

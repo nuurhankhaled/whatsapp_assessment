@@ -93,6 +93,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     4: TabAppBarConfig(),
   };
 
+  // Method to build selected icons that responds to theme changes
+  List<Widget> _buildSelectedIcons(bool isDark) {
+    return [
+      Image.asset(
+        Assets.images.statusFilled.path,
+        width: 32,
+        height: 32,
+        color: isDark ? Colors.white : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.callsFilled.path,
+        width: 32,
+        height: 32,
+        color: isDark ? Colors.white : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.communitiesFilled.path,
+        width: 32,
+        height: 32,
+        color: isDark ? Colors.white : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.chatsFilled.path,
+        width: 32,
+        height: 32,
+        color: isDark ? Colors.white : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.settingsFilled.path,
+        width: 32,
+        height: 32,
+        color: isDark ? Colors.white : Colors.black,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final titles = [
@@ -109,49 +145,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Image.asset(Assets.images.communities.path, width: 32, height: 32),
       Image.asset(Assets.images.chats.path, width: 32, height: 32),
       Image.asset(Assets.images.settings.path, width: 32, height: 32),
-    ];
-
-    final selectedIcons = [
-      Image.asset(
-        Assets.images.statusFilled.path,
-        width: 32,
-        height: 32,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
-      ),
-      Image.asset(
-        Assets.images.callsFilled.path,
-        width: 32,
-        height: 32,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
-      ),
-      Image.asset(
-        Assets.images.communitiesFilled.path,
-        width: 32,
-        height: 32,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
-      ),
-      Image.asset(
-        Assets.images.chatsFilled.path,
-        width: 32,
-        height: 32,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
-      ),
-      Image.asset(
-        Assets.images.settingsFilled.path,
-        width: 32,
-        height: 32,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
-      ),
     ];
 
     return BlocProvider(
@@ -182,13 +175,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            bottomNavigationBar: _buildBottomNavigationBar(
-              titles,
-              unselectedIcons,
-              selectedIcons,
-              cubit,
-              context,
-            ),
+            bottomNavigationBar:
+                BlocBuilder<ChangeThemeCubit, ChangeThemeStates>(
+                  builder: (context, themeState) {
+                    // Get current theme state
+                    final isDark = context.watch<ChangeThemeCubit>().isDark;
+                    final selectedIcons = _buildSelectedIcons(isDark);
+
+                    return _buildBottomNavigationBar(
+                      titles,
+                      unselectedIcons,
+                      selectedIcons,
+                      cubit,
+                      context,
+                      isDark,
+                    );
+                  },
+                ),
           );
         },
       ),
@@ -226,14 +229,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<Widget> selectedIcons,
     MainLayoutCubit cubit,
     BuildContext context,
+    bool isDark, // Add isDark parameter
   ) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: context.read<ChangeThemeCubit>().isDark
-                ? Colors.transparent
-                : AppColors.navBarBorder,
+            color: isDark ? Colors.transparent : AppColors.navBarBorder,
             width: 0.2,
           ),
         ),
@@ -242,7 +244,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
         currentIndex: mainLayoutIntitalScreenIndex,
-        backgroundColor: context.read<ChangeThemeCubit>().isDark
+        backgroundColor: isDark
             ? Colors.black.withAlpha(240)
             : Colors.white.withAlpha(240),
         elevation: 0,
@@ -254,9 +256,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           fontFamily: "SFPro",
           fontWeight: FontWeight.w300,
         ),
-        selectedItemColor: context.read<ChangeThemeCubit>().isDark
-            ? Colors.white
-            : Colors.black,
+        selectedItemColor: isDark ? Colors.white : Colors.black,
         unselectedItemColor: AppColors.textSecondary,
         onTap: (index) {
           _animateIcon(index);

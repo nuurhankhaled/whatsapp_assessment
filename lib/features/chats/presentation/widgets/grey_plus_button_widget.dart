@@ -9,17 +9,24 @@ class GreyPlusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 34,
-      height: 34,
-      padding: const EdgeInsets.all(5.0),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.grey.shade900.withAlpha(170)
-            : AppColors.lightGreyBackground,
-      ),
-      child: Image.asset(Assets.images.greyPlus.path),
+    return BlocConsumer<ChangeThemeCubit, ChangeThemeStates>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return Container(
+          width: 34,
+          height: 34,
+          padding: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: context.read<ChangeThemeCubit>().isDark
+                ? Colors.grey.shade900.withAlpha(170)
+                : AppColors.lightGreyBackground,
+          ),
+          child: Image.asset(Assets.images.greyPlus.path),
+        );
+      },
     );
   }
 }

@@ -9,20 +9,27 @@ class PlusButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 28,
-      height: 28,
-      padding: const EdgeInsets.all(2.0),
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppColors.tealColor,
-      ),
-      child: Image.asset(
-        Assets.images.plusIcon.path,
-        color: context.read<ChangeThemeCubit>().isDark
-            ? Colors.black
-            : Colors.white,
-      ),
+    return BlocConsumer<ChangeThemeCubit, ChangeThemeStates>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return Container(
+          width: 28,
+          height: 28,
+          padding: const EdgeInsets.all(2.0),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.tealColor,
+          ),
+          child: Image.asset(
+            Assets.images.plusIcon.path,
+            color: context.read<ChangeThemeCubit>().isDark
+                ? Colors.black
+                : Colors.white,
+          ),
+        );
+      },
     );
   }
 }
