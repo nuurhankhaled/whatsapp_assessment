@@ -1,37 +1,26 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:whatsapp_assessment/core/enum/message_status_enum.dart';
 import 'package:whatsapp_assessment/core/extensions/spacing.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/conversation/data/models/conversation_model.dart';
+import 'package:whatsapp_assessment/features/conversation/enum/message_types_enum.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class MessageBubble extends StatelessWidget {
-  final bool isSender;
-  final String text;
   final bool tail;
   final Color color;
-  final bool sent;
-  final bool delivered;
-  final bool seen;
-  final BoxConstraints? constraints;
-
+  final MessageModel messageModel;
   const MessageBubble({
-    super.key,
-    this.isSender = true,
-    this.constraints,
-    required this.text,
     this.color = Colors.white70,
     this.tail = true,
-    this.sent = false,
-    this.delivered = false,
-    this.seen = false,
+    required this.messageModel,
   });
 
   @override
   Widget build(BuildContext context) {
     bool stateTick = false;
     Widget? messageStatus;
-    if (sent) {
+    if (messageModel.messageStatus == MessageStatusEnum.sent) {
       stateTick = true;
       messageStatus = Image.asset(
         Assets.images.sentMessage.path,
@@ -39,7 +28,7 @@ class MessageBubble extends StatelessWidget {
         height: 15,
       );
     }
-    if (delivered) {
+    if (messageModel.messageStatus == MessageStatusEnum.delivered) {
       stateTick = true;
       messageStatus = Image.asset(
         Assets.images.deliveredMessage.path,
@@ -47,7 +36,7 @@ class MessageBubble extends StatelessWidget {
         height: 15,
       );
     }
-    if (seen) {
+    if (messageModel.messageStatus == MessageStatusEnum.seen) {
       stateTick = true;
       messageStatus = Image.asset(
         Assets.images.seenMessage.path,
@@ -55,73 +44,130 @@ class MessageBubble extends StatelessWidget {
         height: 15,
       );
     }
-return Align(
-  alignment: isSender ? Alignment.topRight : Alignment.topLeft,
-  child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-    child: CustomPaint(
-      painter: _MessageBubble(
-        borderColor: AppColors.navBarBorder.withAlpha(50),
-        color: color,
-        alignment: isSender ? Alignment.topRight : Alignment.topLeft,
-        tail: tail,
-      ),
-      child: Container(
-        constraints: constraints ??
-            BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * .7,
-            ),
-        margin: isSender
-            ? stateTick
-                ? const EdgeInsets.fromLTRB(7, 7, 14, 7)
-                : const EdgeInsets.fromLTRB(7, 7, 17, 7)
-            : const EdgeInsets.fromLTRB(17, 7, 7, 7),
-        child: Column(
-            mainAxisSize: MainAxisSize.min, // ADD THIS LINE
-          crossAxisAlignment: isSender
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: stateTick && isSender
-                  ? const EdgeInsets.only(left: 4, right: 10, bottom: 2)
-                  : const EdgeInsets.only(left: 4, right: 4, bottom: 2),
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
+    return Align(
+      alignment: messageModel.isSender ? Alignment.topRight : Alignment.topLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        child: CustomPaint(
+          painter: _MessageBubble(
+            borderColor: AppColors.navBarBorder.withAlpha(50),
+            color: color,
+            alignment: messageModel.isSender
+                ? Alignment.topRight
+                : Alignment.topLeft,
+            tail: tail,
+          ),
+          child: (messageModel.type == MessageType.image)
+              ? Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * .7,
+                  ),
+                  margin: messageModel.isSender
+                      ? stateTick
+                            ? const EdgeInsets.fromLTRB(6, 4, 15, 4)
+                            : const EdgeInsets.fromLTRB(6, 4, 15, 4)
+                      : const EdgeInsets.fromLTRB(15, 4, 4, 4),
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        width: 240,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: NetworkImage(messageModel.imageUrl!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 5,
+                        right: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              messageModel.time,
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 11,
+                                  ),
+                            ),
+                            if (!messageModel.isSender)
+                              context.horizontalSpace(5),
+                            context.horizontalSpace(5),
+                            if (messageStatus != null &&
+                                stateTick &&
+                                messageModel.isSender)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: messageStatus,
+                              ),
+                          ],
+                        ),
+                      ),
+
+                      // context.verticalSpace(5),
+                    ],
+                  ),
+                )
+              : Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * .7,
+                    minWidth: MediaQuery.of(context).size.width * .15,
+                  ),
+                  margin: messageModel.isSender
+                      ? stateTick
+                            ? const EdgeInsets.fromLTRB(7, 7, 14, 7)
+                            : const EdgeInsets.fromLTRB(7, 7, 17, 7)
+                      : const EdgeInsets.fromLTRB(17, 7, 7, 7),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: stateTick && messageModel.isSender ? 4 : 4,
+                          right: stateTick && messageModel.isSender ? 10 : 4,
+                          top: 4,
+                          bottom: 18, // Space at bottom for time/status
+                        ),
+                        child: Text(
+                          messageModel.text ?? "",
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                              ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 1,
+                        right: 8,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              messageModel.time,
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 11,
+                                  ),
+                            ),
+                            if (stateTick && messageModel.isSender) ...[
+                              context.horizontalSpace(4),
+                              messageStatus!,
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            context.verticalSpace(5),
-            Row(
-  mainAxisSize: MainAxisSize.min,
-  mainAxisAlignment: MainAxisAlignment.end,
-  children: [
-    Text(
-      "19:24" , 
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-        color: AppColors.textSecondary,
-        fontSize: 11,
-      ),
-    ),
-    context.horizontalSpace(5),
-    if (messageStatus != null && stateTick && isSender) ...[
-      Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: messageStatus,
-      ),
-    ],
-  ],
-),
-          ],
         ),
       ),
-    ),
-  ),
-);
+    );
   }
 }
 

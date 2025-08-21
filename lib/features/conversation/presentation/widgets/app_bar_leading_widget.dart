@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_assessment/core/extensions/spacing.dart';
 
@@ -10,7 +9,9 @@ class AppBarLeadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.router.back(),
+      onTap: () {
+        Navigator.of(context).pop();
+      },
       child: Row(
         children: [
           context.horizontalSpace(3),
