@@ -25,6 +25,18 @@ class AppTheme {
       secondary: AppColors.secondaryColor,
     ),
   );
+  ThemeData darkTheme = ThemeData(
+    primaryColor: AppColors.primaryColor,
+    scaffoldBackgroundColor: Colors.black,
+    textTheme: textTheme,
+    fontFamily: 'SFPro',
+    appBarTheme: _appBarTheme(textTheme: textTheme, iconColor: Colors.white),
+    platform: TargetPlatform.iOS,
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: AppColors.primaryColor,
+      secondary: AppColors.secondaryColor,
+    ),
+  );
   static final AppTheme _instance = AppTheme._internal();
 
   static AppTheme get instance => _instance;

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/features/chats/data/models/chat_model.dart';
-import 'package:whatsapp_assessment/features/chats/enum/message_status_enum.dart';
+import 'package:whatsapp_assessment/core/enum/message_status_enum.dart';
 part 'chats_state.dart';
 
 class ChatsCubit extends Cubit<ChatsState> {
@@ -17,15 +17,10 @@ class ChatsCubit extends Cubit<ChatsState> {
     selectedFilterIndex = index;
     emit(ChatsFilterState(selectedFilterIndex));
   }
-
-  int get totalUnreadCount {
-    return chatDataList
-        .where((chat) => chat.numberOfUnreadMessages > 0)
-        .fold(0, (sum, chat) => sum + chat.numberOfUnreadMessages);
-  }
-
+  int  unreadChatsNum = 0;
   int get unreadChatsCount {
-    return chatDataList.where((chat) => chat.numberOfUnreadMessages > 0).length;
+    unreadChatsNum = chatDataList.where((chat) => chat.numberOfUnreadMessages > 0).length;
+    return unreadChatsNum;
   }
 
   List<ChatModel> get filteredChats {

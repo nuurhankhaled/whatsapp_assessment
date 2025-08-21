@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_assessment/core/helpers/spacing.dart';
+import 'package:whatsapp_assessment/core/extensions/spacing.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/widgets/archived_container.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/widgets/chat_card.dart';
@@ -24,14 +24,14 @@ class ChatsPage extends StatelessWidget {
                 child: Row(
                   spacing: 8,
                   children: [
-                    horizontalSpace(8),
+                    context.horizontalSpace(8),
                     const FiltersListViewWidget(),
                     const GreyPlusButton(),
-                    horizontalSpace(8),
+                    context.horizontalSpace(8),
                   ],
                 ),
               ),
-              verticalSpace(5),
+              context.verticalSpace(5),
               if (cubit.selectedFilterIndex == 0 ||
                   cubit.selectedFilterIndex == 1)
                 const ArchivedMessagesContainer(),
@@ -61,11 +61,11 @@ class ChatsPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: cubit.filteredChats.length,
                   itemBuilder: (context, index) {
-                    return ChatCard(model: cubit.filteredChats[index]);
+                    return ChatCard(model: cubit.filteredChats[index], unreadChatsCount: cubit.unreadChatsCount,);
                   },
                 ),
               ),
-              verticalSpace(100),
+              context.verticalSpace(100),
             ],
           ),
         );

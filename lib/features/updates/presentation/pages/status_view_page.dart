@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_assessment/core/helpers/extensions.dart';
 import 'package:whatsapp_assessment/features/updates/data/models/story_viewer_configurations.dart';
 import 'package:whatsapp_assessment/features/updates/helpers/animations_helper.dart';
 import 'package:whatsapp_assessment/features/updates/helpers/story_gesture_helper.dart';
@@ -38,7 +38,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
     _storyController = StoryHelper(
       context: context,
       animationHelper: _animationHelper,
-      onExit: () => context.pop(),
+      onExit: () => context.router.back(),
       onPageTransition: _handlePageTransition,
     );
     _gestureHelper = StoryGestureHelper(
@@ -86,7 +86,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
     if (!mounted) return;
     final screenHeight = MediaQuery.of(context).size.height;
     if ((target - screenHeight).abs() < 1.0) {
-      context.pop();
+      context.router.back();
     } else {
       setState(() => _dragOffset = 0.0);
       Future.delayed(StoryViewerConfig.resumeDelay, () {
