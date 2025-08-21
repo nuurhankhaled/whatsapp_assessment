@@ -9,6 +9,7 @@ import 'package:whatsapp_assessment/features/conversation/presentation/widgets/a
 import 'package:whatsapp_assessment/features/conversation/presentation/widgets/app_bar_title_widget.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/widgets/conversation_body.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/widgets/convo_bottom_nav_bar.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 
 @RoutePage()
 class ConversationPage extends StatefulWidget {
@@ -81,9 +82,9 @@ class _ConversationPageState extends State<ConversationPage>
           leadingWidth: 53,
           leading: AppBarLeadingWidget(unreadChatsNum: widget.unreadChatsNum),
           title: AppBarTitleWidget(sender: widget.sender),
-          backgroundColor: AppColors.conversationBarsLightBackground.withAlpha(
-            220,
-          ),
+          backgroundColor: context.read<ChangeThemeCubit>().isDark
+              ? Colors.black.withAlpha(230)
+              : AppColors.conversationBarsLightBackground.withAlpha(220),
           elevation: 0,
         ),
         bottomNavigationBar: const ConvoBottomNavBar(),

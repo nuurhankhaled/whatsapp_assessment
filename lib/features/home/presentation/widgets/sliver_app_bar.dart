@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/constants/constant.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/core/widgets/search_widget.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/tab_bar_config.dart';
 import 'package:whatsapp_assessment/generated/translations/locale_keys.g.dart';
 
@@ -22,27 +24,38 @@ class HomeSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      expandedHeight: mainLayoutIntitalScreenIndex == 0 ? 120 : 153.0,
-      automaticallyImplyLeading: false,
-      backgroundColor: Colors.white,
-      bottom: isCollapsed ? _buildBorder() : null,
-      title: _buildTitle(context),
-      flexibleSpace: _buildFlexibleSpace(context),
+    return BlocBuilder<ChangeThemeCubit, ChangeThemeStates>(
+      builder: (context, state) {
+        return SliverAppBar(
+          pinned: true,
+          expandedHeight: mainLayoutIntitalScreenIndex == 0 ? 120 : 153.0,
+          automaticallyImplyLeading: false,
+          backgroundColor: context.read<ChangeThemeCubit>().isDark
+              ? Colors.black.withAlpha(240)
+              : Colors.white,
+          bottom: isCollapsed ? _buildBorder(context) : null,
+          title: _buildTitle(context),
+          flexibleSpace: _buildFlexibleSpace(context),
+        );
+      },
     );
   }
 
-  PreferredSize _buildBorder() {
-    return const PreferredSize(
-      preferredSize: Size.fromHeight(0),
+  PreferredSize _buildBorder(BuildContext context) {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(0),
       child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: AppColors.navBarBorder, width: 0.2),
+            bottom: BorderSide(
+              color: context.read<ChangeThemeCubit>().isDark
+                  ? Colors.transparent
+                  : AppColors.navBarBorder,
+              width: 0.2,
+            ),
           ),
         ),
-        child: SizedBox(width: double.infinity, height: 0.2),
+        child: const SizedBox(width: double.infinity, height: 0.2),
       ),
     );
   }
@@ -100,7 +113,9 @@ class HomeSliverAppBar extends StatelessWidget {
     return FlexibleSpaceBar(
       titlePadding: EdgeInsets.zero,
       background: ColoredBox(
-        color: Colors.white,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.black
+            : Colors.white,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -118,6 +133,9 @@ class HomeSliverAppBar extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 33.3,
+                      color: context.read<ChangeThemeCubit>().isDark
+                          ? Colors.white
+                          : Colors.black,
                     ),
                   ),
                 if (!isCollapsed) const SizedBox(height: 10),

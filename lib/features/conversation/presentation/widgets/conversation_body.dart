@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/controllers/message_animated_controller.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/widgets/message_list_view_widget.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class ConversationBody extends StatelessWidget {
@@ -22,7 +24,11 @@ class ConversationBody extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(Assets.images.chatLightBackground.path),
+            image: AssetImage(
+              context.read<ChangeThemeCubit>().isDark
+                  ? Assets.images.chatDarkBackground.path
+                  : Assets.images.chatLightBackground.path,
+            ),
             fit: BoxFit.cover,
           ),
         ),

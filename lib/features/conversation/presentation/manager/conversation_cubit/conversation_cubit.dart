@@ -6,6 +6,7 @@ import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/conversation/data/models/conversation_model.dart';
 import 'package:whatsapp_assessment/features/conversation/enum/message_types_enum.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/manager/conversation_cubit/convo_list.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 part 'conversation_state.dart';
 
 class ConversationCubit extends Cubit<ConversationState> {
@@ -56,11 +57,15 @@ class ConversationCubit extends Cubit<ConversationState> {
     return '$hour:$minute'; // 24-hour format: HH:MM
   }
 
-  Color getMessageBubbleColor(MessageModel message) {
+  Color getMessageBubbleColor(MessageModel message, BuildContext context) {
     if (message.isSender) {
-      return AppColors.chatBubbleSender;
+      return !context.read<ChangeThemeCubit>().isDark
+          ? AppColors.chatBubbleSender
+          : AppColors.chatBubbleDarkSender;
     } else {
-      return Colors.white;
+      return !context.read<ChangeThemeCubit>().isDark
+          ? Colors.white
+          : AppColors.chatBubbleDarkReciever;
     }
   }
 

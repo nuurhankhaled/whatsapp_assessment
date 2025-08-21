@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class MessageInputField extends StatefulWidget {
@@ -47,10 +50,11 @@ class _MessageInputFieldState extends State<MessageInputField> {
                 style: Theme.of(
                   context,
                 ).textTheme.labelMedium?.copyWith(fontSize: 14),
-                decoration: _buildInputDecoration(),
+                decoration: _buildInputDecoration(context),
               ),
               // Animating text overlay
-              if (widget.animatingText.isNotEmpty) _buildAnimatingOverlay(context),
+              if (widget.animatingText.isNotEmpty)
+                _buildAnimatingOverlay(context),
             ],
           ),
         ),
@@ -58,26 +62,37 @@ class _MessageInputFieldState extends State<MessageInputField> {
     );
   }
 
-  InputDecoration _buildInputDecoration() {
+  InputDecoration _buildInputDecoration(BuildContext context) {
     return InputDecoration(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: (context.read<ChangeThemeCubit>().isDark)
+          ? AppColors.chatBubbleDarkReciever
+          : Colors.white,
       isDense: true,
       suffixIcon: Padding(
         padding: const EdgeInsets.only(left: 4.5, top: 4.5, bottom: 4.5),
-        child: Image.asset(Assets.images.sticker.path),
+        child: Image.asset(
+          Assets.images.sticker.path,
+          color: context.read<ChangeThemeCubit>().isDark
+              ? Colors.white
+              : Colors.black,
+        ),
       ),
-      enabledBorder: _buildBorder(),
-      focusedBorder: _buildBorder(),
-      border: _buildBorder(),
+      enabledBorder: _buildBorder(context),
+      focusedBorder: _buildBorder(context),
+      border: _buildBorder(context),
       contentPadding: const EdgeInsets.only(left: 12),
     );
   }
 
-  OutlineInputBorder _buildBorder() {
+  OutlineInputBorder _buildBorder(BuildContext context) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(15),
-      borderSide: BorderSide(color: Colors.grey.withAlpha(100)),
+      borderSide: BorderSide(
+        color: (context.read<ChangeThemeCubit>().isDark)
+            ? AppColors.chatBubbleDarkReciever
+            : Colors.grey.withAlpha(100),
+      ),
     );
   }
 
@@ -92,7 +107,9 @@ class _MessageInputFieldState extends State<MessageInputField> {
             child: Container(
               height: widget.isTextFieldFocused ? 28 : 30,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: (context.read<ChangeThemeCubit>().isDark)
+                    ? AppColors.chatBubbleDarkReciever
+                    : Colors.white,
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Colors.grey.withAlpha(100)),
               ),

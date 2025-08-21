@@ -4,6 +4,7 @@ import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/manager/conversation_cubit/conversation_cubit.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/widgets/actions_buttons.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/widgets/message_input_field.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class ConvoBottomNavBar extends StatefulWidget {
@@ -110,7 +111,9 @@ class _ConvoBottomNavBarState extends State<ConvoBottomNavBar>
             padding: const EdgeInsets.symmetric(horizontal: 6),
             width: double.infinity,
             height: cubit.isTextFieldFocused ? 50 : 77,
-            color: AppColors.conversationBarsLightBackground.withAlpha(220),
+            color: context.read<ChangeThemeCubit>().isDark
+                ? Colors.black.withAlpha(230)
+                : AppColors.conversationBarsLightBackground.withAlpha(220),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -119,6 +122,9 @@ class _ConvoBottomNavBarState extends State<ConvoBottomNavBar>
                   icon: Image.asset(
                     Assets.images.convoPlusIcon.path,
                     width: 27,
+                    color: context.read<ChangeThemeCubit>().isDark
+                        ? Colors.white
+                        : Colors.black,
                   ),
                 ),
                 MessageInputField(

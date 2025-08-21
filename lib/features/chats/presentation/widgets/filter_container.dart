@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 
 class FilterContainer extends StatelessWidget {
   const FilterContainer({super.key, required this.filterIndex});
@@ -23,7 +24,11 @@ class FilterContainer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.chatActiveFilterBackground
+                  ? context.read<ChangeThemeCubit>().isDark
+                        ? AppColors.chatActiveFilterDarkBackground
+                        : AppColors.chatActiveFilterBackground
+                  : context.read<ChangeThemeCubit>().isDark
+                  ? Colors.grey.shade900.withAlpha(170)
                   : AppColors.lightGreyBackground,
               borderRadius: BorderRadius.circular(19.0),
             ),
@@ -35,7 +40,9 @@ class FilterContainer extends StatelessWidget {
                     filters[filterIndex],
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: isSelected
-                          ? AppColors.chatActiveFilterText
+                          ? context.read<ChangeThemeCubit>().isDark
+                                ? AppColors.chatActiveFilterBackground
+                                : AppColors.chatActiveFilterText
                           : AppColors.textSecondary,
                       fontWeight: FontWeight.w600,
                       fontSize: 14,

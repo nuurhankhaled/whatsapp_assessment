@@ -32,6 +32,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Dark.png
+  AssetGenImage get dark => const AssetGenImage('assets/images/Dark.png');
+
   /// File path: assets/images/add_photo.png
   AssetGenImage get addPhoto =>
       const AssetGenImage('assets/images/add_photo.png');
@@ -98,6 +101,9 @@ class $AssetsImagesGen {
   AssetGenImage get greyPlus =>
       const AssetGenImage('assets/images/grey_plus.png');
 
+  /// File path: assets/images/light.png
+  AssetGenImage get light => const AssetGenImage('assets/images/light.png');
+
   /// File path: assets/images/menu_iconpng.png
   AssetGenImage get menuIconpng =>
       const AssetGenImage('assets/images/menu_iconpng.png');
@@ -160,6 +166,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    dark,
     addPhoto,
     archived,
     calls,
@@ -177,6 +184,7 @@ class $AssetsImagesGen {
     convoVideoIcon,
     deliveredMessage,
     greyPlus,
+    light,
     menuIconpng,
     metaAiLogo,
     mic,

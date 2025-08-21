@@ -38,7 +38,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
     _storyController = StoryHelper(
       context: context,
       animationHelper: _animationHelper,
-      onExit: () => context.router.back(),
+      onExit: () => Navigator.of(context),
       onPageTransition: _handlePageTransition,
     );
     _gestureHelper = StoryGestureHelper(
@@ -86,7 +86,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
     if (!mounted) return;
     final screenHeight = MediaQuery.of(context).size.height;
     if ((target - screenHeight).abs() < 1.0) {
-      context.router.back();
+      Navigator.of(context).pop();
     } else {
       setState(() => _dragOffset = 0.0);
       Future.delayed(StoryViewerConfig.resumeDelay, () {
