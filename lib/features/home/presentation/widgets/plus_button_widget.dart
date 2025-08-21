@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class PlusButton extends StatelessWidget {
@@ -15,7 +17,12 @@ class PlusButton extends StatelessWidget {
         shape: BoxShape.circle,
         color: AppColors.tealColor,
       ),
-      child: Image.asset(Assets.images.plusIcon.path),
+      child: Image.asset(
+        Assets.images.plusIcon.path,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.black
+            : Colors.white,
+      ),
     );
   }
 }

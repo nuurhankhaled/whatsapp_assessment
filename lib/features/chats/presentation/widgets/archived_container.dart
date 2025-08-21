@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class ArchivedMessagesContainer extends StatelessWidget {
@@ -29,9 +31,13 @@ class ArchivedMessagesContainer extends StatelessWidget {
                 top: 10,
                 bottom: 10,
               ), // Added bottom padding
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: AppColors.lightGreyBackground),
+                  bottom: BorderSide(
+                    color: context.read<ChangeThemeCubit>().isDark
+                        ? AppColors.darkGreyBackground
+                        : AppColors.lightGreyBackground,
+                  ),
                 ),
               ),
               child: Text(

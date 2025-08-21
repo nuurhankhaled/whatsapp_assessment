@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/data/models/chat_model.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class AppBarTitleWidget extends StatelessWidget {
@@ -16,12 +18,27 @@ class AppBarTitleWidget extends StatelessWidget {
           radius: 18,
           backgroundImage: NetworkImage(sender.image),
         ),
-        Text(sender.name, style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          fontWeight: FontWeight.bold
-        )),
+        Text(
+          sender.name,
+          style: Theme.of(
+            context,
+          ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const Spacer(),
-        Image.asset(Assets.images.convoVideoIcon.path, width: 27,),
-        Image.asset(Assets.images.convoPhoneIcon.path, width: 27,),
+        Image.asset(
+          Assets.images.convoVideoIcon.path,
+          width: 27,
+          color: context.read<ChangeThemeCubit>().isDark
+              ? Colors.white
+              : Colors.black,
+        ),
+        Image.asset(
+          Assets.images.convoPhoneIcon.path,
+          width: 27,
+          color: context.read<ChangeThemeCubit>().isDark
+              ? Colors.white
+              : Colors.black,
+        ),
       ],
     );
   }

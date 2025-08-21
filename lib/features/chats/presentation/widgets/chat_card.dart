@@ -1,14 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/functions/date_format.dart';
-import 'package:whatsapp_assessment/core/routing/router.gr.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/data/models/chat_model.dart';
 import 'package:whatsapp_assessment/core/enum/message_status_enum.dart';
-import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/manager/conversation_cubit/conversation_cubit.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/pages/conversation_page.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class ChatCard extends StatelessWidget {
@@ -92,9 +90,13 @@ class ChatCard extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(color: AppColors.lightGreyBackground),
+                      bottom: BorderSide(
+                        color: context.read<ChangeThemeCubit>().isDark
+                            ? AppColors.darkGreyBackground
+                            : AppColors.lightGreyBackground,
+                      ),
                     ),
                   ),
                   child: Padding(

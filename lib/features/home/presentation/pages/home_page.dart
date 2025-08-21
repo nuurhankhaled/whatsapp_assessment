@@ -8,6 +8,7 @@ import 'package:whatsapp_assessment/core/functions/pop_curve.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/pages/chats_page.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/features/home/presentation/manager/main_layout_cubit/main_layout_cubit.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/camera_button.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/floating_action_button_widget.dart';
@@ -15,6 +16,7 @@ import 'package:whatsapp_assessment/features/home/presentation/widgets/menu_butt
 import 'package:whatsapp_assessment/features/home/presentation/widgets/plus_button_widget.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/sliver_app_bar.dart';
 import 'package:whatsapp_assessment/features/home/presentation/widgets/tab_bar_config.dart';
+import 'package:whatsapp_assessment/features/home/presentation/widgets/theme_toggle_widget.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/manager/status_cubit/status_cubit.dart';
 import 'package:whatsapp_assessment/features/updates/presentation/pages/updates_page.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
@@ -110,11 +112,46 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ];
 
     final selectedIcons = [
-      Image.asset(Assets.images.statusFilled.path, width: 32, height: 32),
-      Image.asset(Assets.images.callsFilled.path, width: 32, height: 32),
-      Image.asset(Assets.images.communitiesFilled.path, width: 32, height: 32),
-      Image.asset(Assets.images.chatsFilled.path, width: 32, height: 32),
-      Image.asset(Assets.images.settingsFilled.path, width: 32, height: 32),
+      Image.asset(
+        Assets.images.statusFilled.path,
+        width: 32,
+        height: 32,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.white
+            : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.callsFilled.path,
+        width: 32,
+        height: 32,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.white
+            : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.communitiesFilled.path,
+        width: 32,
+        height: 32,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.white
+            : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.chatsFilled.path,
+        width: 32,
+        height: 32,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.white
+            : Colors.black,
+      ),
+      Image.asset(
+        Assets.images.settingsFilled.path,
+        width: 32,
+        height: 32,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.white
+            : Colors.black,
+      ),
     ];
 
     return BlocProvider(
@@ -150,6 +187,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               unselectedIcons,
               selectedIcons,
               cubit,
+              context,
             ),
           );
         },
@@ -187,18 +225,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<Widget> unselectedIcons,
     List<Widget> selectedIcons,
     MainLayoutCubit cubit,
+    BuildContext context,
   ) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: AppColors.navBarBorder, width: 0.2),
+          top: BorderSide(
+            color: context.read<ChangeThemeCubit>().isDark
+                ? Colors.transparent
+                : AppColors.navBarBorder,
+            width: 0.2,
+          ),
         ),
       ),
       child: BottomNavigationBar(
         selectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
         currentIndex: mainLayoutIntitalScreenIndex,
-        backgroundColor: Colors.white.withAlpha(240),
+        backgroundColor: context.read<ChangeThemeCubit>().isDark
+            ? Colors.black.withAlpha(240)
+            : Colors.white.withAlpha(240),
         elevation: 0,
         selectedLabelStyle: const TextStyle(
           fontFamily: "SFPro",
@@ -208,7 +254,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           fontFamily: "SFPro",
           fontWeight: FontWeight.w300,
         ),
-        selectedItemColor: Colors.black,
+        selectedItemColor: context.read<ChangeThemeCubit>().isDark
+            ? Colors.white
+            : Colors.black,
         unselectedItemColor: AppColors.textSecondary,
         onTap: (index) {
           _animateIcon(index);
@@ -286,17 +334,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: const ChatsPage(),
         );
       case 4: // Settings
-        return Column(
-          children: [
-            Center(
-              child: Text(
-                appBarTitles[4].data!,
-                style: Theme.of(
-                  context,
-                ).textTheme.headlineMedium?.copyWith(fontFamily: "SFPro"),
+        return BlocBuilder<ChangeThemeCubit, ChangeThemeStates>(
+          builder: (context, state) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 70,
               ),
-            ),
-          ],
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Change theme",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(fontFamily: "SFPro"),
+                  ),
+                  Spacer(),
+                  ThemeToggleWidget(),
+                ],
+              ),
+            );
+          },
         );
       default:
         return const Center(child: Text('Unknown tab'));

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class GreyPlusButton extends StatelessWidget {
@@ -11,9 +13,11 @@ class GreyPlusButton extends StatelessWidget {
       width: 34,
       height: 34,
       padding: const EdgeInsets.all(5.0),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.lightGreyBackground,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.grey.shade900.withAlpha(170)
+            : AppColors.lightGreyBackground,
       ),
       child: Image.asset(Assets.images.greyPlus.path),
     );

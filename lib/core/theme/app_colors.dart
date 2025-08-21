@@ -8,8 +8,11 @@ class AppColors {
   // Backgrounds:
   static const iconBackground = Color(0xFFf7f7f7);
   static const lightGreyBackground = Color(0xFFF4F4F4);
+  static const darkGreyBackground = Color(0xFF0F1418);
   static const chatActiveFilterBackground = Color(0xFFD0FECF);
+  static const chatActiveFilterDarkBackground = Color(0xFF133527);
   static const conversationBarsLightBackground = Color(0xFFefece7);
+  static const navbarDarkBackground = Color(0xFF171717);
   // Texts:
   static const textPrimary = Color(0xFF0A0A0A);
   static const textSecondary = Color(0xFF767779);
@@ -24,4 +27,6 @@ class AppColors {
 
   //chat bubble
   static const chatBubbleSender = Color(0xFFD0FECF);
+  static const chatBubbleDarkSender = Color(0xFF254a39);
+  static const chatBubbleDarkReciever = Color(0xFF232625);
 }

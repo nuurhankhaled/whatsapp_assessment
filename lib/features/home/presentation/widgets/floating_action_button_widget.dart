@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class FloatingActionButtonWidget extends StatelessWidget {
@@ -12,7 +14,9 @@ class FloatingActionButtonWidget extends StatelessWidget {
       child: FloatingActionButton(
         shape: const CircleBorder(),
         onPressed: () {},
-        backgroundColor: Colors.white,
+        backgroundColor: context.read<ChangeThemeCubit>().isDark
+            ? Colors.grey.shade900
+            : Colors.white,
         child: Image.asset(
           Assets.images.metaAiLogo.path,
           width: 32,

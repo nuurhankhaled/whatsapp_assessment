@@ -10,6 +10,11 @@ class AppTheme {
     fontFamily: 'SFPro',
     bodyColor: AppColors.textPrimary,
   );
+  static TextTheme darkTextTheme = _textTheme(
+    fontFamily: 'SFPro',
+
+    bodyColor: Colors.white,
+  );
   ThemeData lightTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: Colors.white,
@@ -28,9 +33,12 @@ class AppTheme {
   ThemeData darkTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: Colors.black,
-    textTheme: textTheme,
+    textTheme: darkTextTheme,
     fontFamily: 'SFPro',
-    appBarTheme: _appBarTheme(textTheme: textTheme, iconColor: Colors.white),
+    appBarTheme: _appBarTheme(
+      textTheme: darkTextTheme,
+      iconColor: Colors.white,
+    ),
     platform: TargetPlatform.iOS,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       primary: AppColors.primaryColor,

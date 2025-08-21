@@ -6,7 +6,7 @@ import 'package:whatsapp_assessment/core/cache_helper/cache_helper.dart';
 import 'package:whatsapp_assessment/core/cache_helper/cache_values.dart';
 import 'package:whatsapp_assessment/core/routing/router.dart';
 import 'package:whatsapp_assessment/core/theme/app_theme.dart';
-import 'package:whatsapp_assessment/features/home/presentation/manager/change_mood_cubit/change_mood_cubit.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/translations/locale_keys.g.dart';
 
 class WhatsAppApp extends StatelessWidget {
@@ -18,12 +18,14 @@ class WhatsAppApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ChangeMoodCubit()..changeTheme(fromShared: isdark),
-      child: BlocConsumer<ChangeMoodCubit, ChangeMoodStates>(
+      create: (context) => ChangeThemeCubit()..changeTheme(fromShared: isdark),
+      child: BlocConsumer<ChangeThemeCubit, ChangeThemeStates>(
         listener: (context, state) {
           // TODO: implement listener
         },
         builder: (context, state) {
+          final cubit = context.read<ChangeThemeCubit>();
+
           return MaterialApp.router(
             title: tr(LocaleKeys.app_name),
             builder: (context, child) {
@@ -40,7 +42,7 @@ class WhatsAppApp extends StatelessWidget {
             routerDelegate: AutoRouterDelegate(appRouter),
             theme: AppTheme.instance.lightTheme,
             darkTheme: AppTheme.instance.darkTheme,
-            themeMode: isdark ? ThemeMode.dark : ThemeMode.light,
+            themeMode: cubit.isDark ? ThemeMode.dark : ThemeMode.light,
           );
         },
       ),

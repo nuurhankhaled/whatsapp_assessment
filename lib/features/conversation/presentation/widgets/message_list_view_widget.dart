@@ -23,8 +23,8 @@ class MessagesListView extends StatelessWidget {
       // Make sure to rebuild when conversation updates
       buildWhen: (previous, current) {
         return current is ConversationLoaded ||
-               current is ConversationUpdated ||
-               current is MessageSending;
+            current is ConversationUpdated ||
+            current is MessageSending;
       },
       builder: (context, state) {
         final cubit = context.read<ConversationCubit>();
@@ -44,12 +44,8 @@ class MessagesListView extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           reverse: true,
           itemCount: conversation.messages.length,
-          itemBuilder: (context, index) => _buildMessageItem(
-            context,
-            index,
-            conversation.messages,
-            cubit,
-          ),
+          itemBuilder: (context, index) =>
+              _buildMessageItem(context, index, conversation.messages, cubit),
         );
       },
     );
@@ -81,7 +77,7 @@ class MessagesListView extends StatelessWidget {
     bool isAnimating,
     ConversationCubit cubit,
   ) {
-    final color = cubit.getMessageBubbleColor(message);
+    final color = cubit.getMessageBubbleColor(message, context);
     final tail = cubit.shouldShowTail(reversedIndex);
 
     if (isAnimating) {
@@ -96,10 +92,6 @@ class MessagesListView extends StatelessWidget {
       );
     }
 
-    return MessageBubble(
-      messageModel: message,
-      color: color,
-      tail: tail,
-    );
+    return MessageBubble(messageModel: message, color: color, tail: tail);
   }
 }

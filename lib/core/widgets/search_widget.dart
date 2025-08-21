@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class SearchWidget extends StatelessWidget {
@@ -8,9 +10,11 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 36,
+      height: 35,
       decoration: BoxDecoration(
-        color: AppColors.lightGreyBackground,
+        color: context.read<ChangeThemeCubit>().isDark
+            ? Colors.grey.shade900.withAlpha(170)
+            : AppColors.lightGreyBackground,
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(

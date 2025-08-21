@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/features/conversation/presentation/manager/conversation_cubit/conversation_cubit.dart';
+import 'package:whatsapp_assessment/features/home/presentation/manager/change_theme_cubit/change_theme_cubit.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class ActionButtons extends StatelessWidget {
   final VoidCallback onSendTap;
 
-  const ActionButtons({
-    super.key,
-    required this.onSendTap,
-  });
+  const ActionButtons({super.key, required this.onSendTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,27 +19,37 @@ class ActionButtons extends StatelessWidget {
 
         return Row(
           children: [
-            if (!hasText) _buildCameraButton(isTextFieldFocused),
-            _buildSendMicButton(hasText, isTextFieldFocused),
+            if (!hasText) _buildCameraButton(isTextFieldFocused, context),
+            _buildSendMicButton(hasText, isTextFieldFocused, context),
           ],
         );
       },
     );
   }
 
-  Widget _buildCameraButton(bool isTextFieldFocused) {
+  Widget _buildCameraButton(bool isTextFieldFocused, BuildContext context) {
     return AnimatedPadding(
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
       padding: EdgeInsets.only(left: 16.0, top: isTextFieldFocused ? 10 : 12),
       child: GestureDetector(
         onTap: () {},
-        child: Image.asset(Assets.images.convoCamera.path, width: 27),
+        child: Image.asset(
+          Assets.images.convoCamera.path,
+          width: 27,
+          color: context.read<ChangeThemeCubit>().isDark
+              ? Colors.white
+              : Colors.black,
+        ),
       ),
     );
   }
 
-  Widget _buildSendMicButton(bool hasText, bool isTextFieldFocused) {
+  Widget _buildSendMicButton(
+    bool hasText,
+    bool isTextFieldFocused,
+    BuildContext context,
+  ) {
     return AnimatedPadding(
       duration: Duration.zero,
       curve: Curves.easeInOut,
@@ -64,6 +72,9 @@ class ActionButtons extends StatelessWidget {
                   Assets.images.mic.path,
                   key: const ValueKey('mic'),
                   width: 27,
+                  color: context.read<ChangeThemeCubit>().isDark
+                      ? Colors.white
+                      : Colors.black,
                 ),
         ),
       ),
