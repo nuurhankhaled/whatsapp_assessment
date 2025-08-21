@@ -61,7 +61,7 @@ class ChatsPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: cubit.filteredChats.length,
                   itemBuilder: (context, index) {
-                    return ChatCard(model: cubit.filteredChats[index]);
+                    return ChatCard(model: cubit.filteredChats[index], unreadChatsCount: cubit.unreadChatsCount,);
                   },
                 ),
               ),

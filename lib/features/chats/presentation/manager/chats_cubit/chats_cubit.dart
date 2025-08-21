@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_assessment/features/chats/data/models/chat_model.dart';
-import 'package:whatsapp_assessment/features/chats/enum/message_status_enum.dart';
+import 'package:whatsapp_assessment/core/enum/message_status_enum.dart';
 part 'chats_state.dart';
 
 class ChatsCubit extends Cubit<ChatsState> {

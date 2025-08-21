@@ -1,4 +1,4 @@
-import 'package:whatsapp_assessment/features/chats/enum/message_status_enum.dart';
+import 'package:whatsapp_assessment/core/enum/message_status_enum.dart';
 
 class ChatModel {
   final String id;

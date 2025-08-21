@@ -5,13 +5,20 @@ import 'package:whatsapp_assessment/core/functions/date_format.dart';
 import 'package:whatsapp_assessment/core/routing/router.gr.dart';
 import 'package:whatsapp_assessment/core/theme/app_colors.dart';
 import 'package:whatsapp_assessment/features/chats/data/models/chat_model.dart';
-import 'package:whatsapp_assessment/features/chats/enum/message_status_enum.dart';
+import 'package:whatsapp_assessment/core/enum/message_status_enum.dart';
 import 'package:whatsapp_assessment/features/chats/presentation/manager/chats_cubit/chats_cubit.dart';
+import 'package:whatsapp_assessment/features/conversation/presentation/manager/conversation_cubit/conversation_cubit.dart';
+import 'package:whatsapp_assessment/features/conversation/presentation/pages/conversation_page.dart';
 import 'package:whatsapp_assessment/generated/assets.gen.dart';
 
 class ChatCard extends StatelessWidget {
   final ChatModel model;
-  const ChatCard({super.key, required this.model});
+  final int unreadChatsCount;
+  const ChatCard({
+    super.key,
+    required this.model,
+    required this.unreadChatsCount,
+  });
 
   String _getStatusIcon() {
     switch (model.status) {
@@ -30,7 +37,38 @@ class ChatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.router.push(ConversationRoute(sender: model.sender, unreadChatsNum: context.read<ChatsCubit>().unreadChatsCount));
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return BlocProvider(
+                create: (context) =>
+                    ConversationCubit()..setCurrentUser(model.sender.name),
+                child: ConversationPage(
+                  sender: model.sender,
+                  unreadChatsNum: unreadChatsCount,
+                ),
+              );
+            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  // Slide from right to left animation
+                  const begin = Offset(1.0, 0.0); // Start from right
+                  const end = Offset.zero; // End at current position
+                  const curve = Curves.easeInOut;
+
+                  final tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+            reverseTransitionDuration: const Duration(milliseconds: 250),
+          ),
+        );
       },
       child: SizedBox(
         height: 77,
